@@ -10,6 +10,9 @@ import com.holy.interestingdemo.adapter.MainPageAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * created by holy·wang 2018/01/18
+ */
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
