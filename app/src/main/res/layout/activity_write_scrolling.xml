@@ -16,10 +16,16 @@
         android:titleTextColor="#ffffff"/>
 
     <com.dd.CircularProgressButton
+        android:id="@+id/write_cpb"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="3dp"
-        android:text="1233333"
+        android:textColor="#fffaaa"
+        android:textSize="18sp"
+        app:cpb_textComplete="complete"
+        app:cpb_textError="error"
+        app:cpb_textIdle="upload"
+        app:cpb_cornerRadius="50dp"
         />
 
 </LinearLayout>
