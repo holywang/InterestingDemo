@@ -1,7 +1,6 @@
 package com.holy.interestingdemo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.funnywrite.WriteScrollingActivity;
+import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
 
 import java.util.List;
 
@@ -21,6 +20,12 @@ public class MainPageAdapter extends RecyclerView.Adapter<MainPageHolder> {
 
     private Context context;
     private List<String> list;
+
+    private RecyclerViewOnItemClickListener listener;
+
+    public void setOnItemClickListener(RecyclerViewOnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public MainPageAdapter(Context context, List<String> list){
         this.context = context;
@@ -35,21 +40,8 @@ public class MainPageAdapter extends RecyclerView.Adapter<MainPageHolder> {
 
     @Override
     public void onBindViewHolder(MainPageHolder holder, final int position) {
-
         holder.textView.setText(list.get(position));
-        holder.textView.setOnClickListener(view -> {
-            Intent it = new Intent();
-            switch (position){
-                case 0 :
-                    it.setClass(context, WriteScrollingActivity.class);
-
-                    break;
-                default:
-                    it.setClass(context,null);
-            }
-            context.startActivity(it);
-        });
-
+        holder.itemView.setOnClickListener(v-> listener.onItemClick(v,position,list.get(position)));
     }
 
     @Override
@@ -61,9 +53,11 @@ public class MainPageAdapter extends RecyclerView.Adapter<MainPageHolder> {
 class MainPageHolder extends RecyclerView.ViewHolder{
 
     public TextView textView;
+    public View itemView;
 
     public MainPageHolder(View itemView) {
         super(itemView);
+        this.itemView = itemView;
         textView = itemView.findViewById(R.id.info_text);
     }
 }

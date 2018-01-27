@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
+import com.holy.interestingdemo.interfaces.RecyclerViewOnItemClick;
+import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
 
 import java.util.List;
 
@@ -21,6 +23,11 @@ public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
 
     private Context context;
     private List<WritePageItemBean> list;
+    private RecyclerViewOnItemClickListener listener;
+
+    public void setOnItemClickListener(RecyclerViewOnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public WriteListAdapter(Context context,List<WritePageItemBean> list){
         this.context = context;
@@ -39,7 +46,9 @@ public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
 //        holder.head.setImageURI();
         holder.bookName.setText(list.get(position).getName());
         holder.number.setText(list.get(position).getPageNum()+"个章节");
-
+        holder.itemView.setOnClickListener(view -> {
+            listener.onItemClick(view,position,list.get(position));
+        });
     }
 
     @Override
@@ -53,10 +62,11 @@ class WriteListHolder extends RecyclerView.ViewHolder{
     public ImageView head;
     public TextView bookName;
     public TextView number;
+    public View itemView;
 
     public WriteListHolder(View itemView) {
         super(itemView);
-
+        this.itemView = itemView;
         head = itemView.findViewById(R.id.write_list_item_head);
         bookName = itemView.findViewById(R.id.write_list_item_book_name);
         number = itemView.findViewById(R.id.write_list_item_number);

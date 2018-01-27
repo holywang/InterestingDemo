@@ -17,9 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".funnywrite.WriteScrollingActivity"
+            android:name=".funnywrite.WriteActivity"
             android:label="@string/title_activity_write_scrolling"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".funnywrite.WriteAddActivity" />
+        <activity android:name=".funnywrite.WriteListActivity"></activity>
     </application>
 
 </manifest>

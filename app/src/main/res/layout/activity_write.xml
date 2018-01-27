@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.holy.interestingdemo.funnywrite.WriteScrollingActivity">
+    tools:context="com.holy.interestingdemo.funnywrite.WriteActivity">
     <Toolbar
+        android:id="@+id/write_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:targetApi="lollipop"
@@ -15,6 +16,17 @@
         android:title="@string/write_title"
         android:titleTextColor="#ffffff"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/write_list_btn"
+        android:text="小说列表"
+        />
 
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/write_add_btn"
+        android:text="新建小说"
+        />
 </LinearLayout>
