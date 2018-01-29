@@ -12,6 +12,7 @@ import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.adapter.WriteListAdapter;
 import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
 import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.listener.RecyclerViewUpLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,9 @@ public class WriteListActivity extends AppCompatActivity {
     }
 
     private void doSth(){
+        refreshLayout.setColorSchemeResources(
+                R.color.colorAccent,R.color.colorPrimary
+        );
         if (list.isEmpty()) return;
         if (list.size()<=0) return;
         adapter = new WriteListAdapter(this,list);
@@ -60,7 +64,17 @@ public class WriteListActivity extends AppCompatActivity {
             }
         });
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
+        refreshLayout.setOnRefreshListener(() -> {
+
+        });
+        recyclerView.addOnScrollListener(new RecyclerViewUpLoadingListener(mLayoutManager){
+            @Override
+            public void onLoadMore(int currentPage) {
+
+            }
+        });
     }
 }
