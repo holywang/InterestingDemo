@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import com.holy.interestingdemo.R;
 
+import io.realm.Realm;
+
 public class WriteAddActivity extends Activity {
 
     private EditText name,style,author,desc;
@@ -37,5 +39,12 @@ public class WriteAddActivity extends Activity {
         submit.setOnClickListener(view -> {
 
         });
+    }
+
+    /**
+     * 检查数据库是否存在
+     */
+    private void checkDatabase(){
+        Realm realm = Realm.getDefaultInstance();
     }
 }

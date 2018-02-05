@@ -68,12 +68,20 @@ public class WriteListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(() -> {
-
+            list.clear();
+            getData();
         });
         recyclerView.addOnScrollListener(new RecyclerViewUpLoadingListener(mLayoutManager){
             @Override
             public void onLoadMore(int currentPage) {
 
+                for (int i = 0; i < 15; i++) {
+                    WritePageItemBean writePageItemBean = new WritePageItemBean();
+                    writePageItemBean.setName("我的新故事"+i);
+                    writePageItemBean.setPageNum(10);
+                    list.add(writePageItemBean);
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
