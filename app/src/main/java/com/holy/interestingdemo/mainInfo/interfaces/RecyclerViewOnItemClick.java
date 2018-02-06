@@ -1,4 +1,4 @@
-package com.holy.interestingdemo.interfaces;
+package com.holy.interestingdemo.mainInfo.interfaces;
 
 import android.view.View;
 

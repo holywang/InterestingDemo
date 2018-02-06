@@ -1,8 +1,8 @@
-package com.holy.interestingdemo.listener;
+package com.holy.interestingdemo.mainInfo.listener;
 
 import android.view.View;
 
-import com.holy.interestingdemo.interfaces.RecyclerViewOnItemClick;
+import com.holy.interestingdemo.mainInfo.interfaces.RecyclerViewOnItemClick;
 
 /**
  * Created by DR on 2018/1/27.

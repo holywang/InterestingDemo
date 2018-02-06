@@ -1,4 +1,4 @@
-package com.holy.interestingdemo;
+package com.holy.interestingdemo.mainInfo;
 
 import android.app.Application;
 

@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
-import com.holy.interestingdemo.interfaces.RecyclerViewOnItemClick;
-import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 
 import java.util.List;
 

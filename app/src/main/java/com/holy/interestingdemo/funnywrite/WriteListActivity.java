@@ -11,8 +11,8 @@ import android.view.View;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.adapter.WriteListAdapter;
 import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
-import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
-import com.holy.interestingdemo.listener.RecyclerViewUpLoadingListener;
+import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.mainInfo.listener.RecyclerViewUpLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;

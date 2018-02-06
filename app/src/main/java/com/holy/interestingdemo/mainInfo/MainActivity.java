@@ -1,4 +1,4 @@
-package com.holy.interestingdemo;
+package com.holy.interestingdemo.mainInfo;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.holy.interestingdemo.adapter.MainPageAdapter;
+import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
-import com.holy.interestingdemo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

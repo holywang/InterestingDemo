@@ -1,4 +1,4 @@
-package com.holy.interestingdemo.listener;
+package com.holy.interestingdemo.mainInfo.listener;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
