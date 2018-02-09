@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="novel_type">
+        <item>魔幻</item>
+        <item>言情</item>
+        <item>科幻</item>
+        <item>穿越</item>
+        <item>游戏</item>
+    </string-array>
+</resources>

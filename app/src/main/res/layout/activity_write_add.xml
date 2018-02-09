@@ -8,26 +8,29 @@
     <EditText
         android:id="@+id/write_add_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common_height"
         android:hint="名称"/>
 
-    <EditText
+    <Spinner
         android:id="@+id/write_add_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="风格"/>
+        android:layout_height="@dimen/common_height"
+        android:entries="@array/novel_type"
+        />
 
     <EditText
         android:id="@+id/write_add_author"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common_height"
         android:hint="作者"/>
 
     <EditText
         android:id="@+id/write_add_des"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common_height"
         android:hint="描述"/>
+
+
 
     <Button
         android:id="@+id/write_add_image"
