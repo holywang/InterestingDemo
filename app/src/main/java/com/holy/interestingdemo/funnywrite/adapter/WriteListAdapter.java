@@ -44,8 +44,12 @@ public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
 
 //        holder.head.setImageURI();
         holder.bookName.setText(list.get(position).getName());
-        holder.number.setText(list.get(position).getPageNum()+"个章节");
+        holder.number.setText(list.get(position).getType());
         holder.itemView.setOnClickListener(view -> listener.onItemClick(view,position,list.get(position)));
+        holder.itemView.setOnLongClickListener(view -> {
+            listener.OnItemLongClick(view,position,list.get(position));
+            return false;
+        });
     }
 
     @Override

@@ -64,7 +64,7 @@ public class WriteAddActivity extends Activity {
                 return;
             }
             Snackbar.make(view,"添加成功",Snackbar.LENGTH_LONG).show();
-            finish();
+
         });
 
         style.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

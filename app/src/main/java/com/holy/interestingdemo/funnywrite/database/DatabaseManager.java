@@ -42,7 +42,8 @@ public class DatabaseManager {
      * @return 以传入表名为键的 ArrayList<HashMap<String,Object>>
      */
     public Cursor query(String table,String[] columns,String where_what,String[] where_args_what,String orderBy){
-        return database.query(table,columns,where_what,where_args_what,null,null,orderBy);
+        Cursor cs = database.query(table,columns,where_what,where_args_what,null,null,orderBy);
+        return cs;
     }
 
     /**
@@ -51,9 +52,20 @@ public class DatabaseManager {
      * @return
      */
     public Cursor queryAll(String table){
-        return query(table,null,null,null,null);
+        Cursor cs = database.rawQuery("select * from "+table,new String[]{});
+        return cs;
     }
 
+    /**
+     * 删除方法
+     * @param table 表名
+     * @param where 索引字段
+     * @param whereArg 字段内容
+     * @return
+     */
+    public int delete(String table,String where,String[] whereArg){
+        return database.delete(table,where,whereArg);
+    }
 
 
 }

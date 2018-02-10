@@ -1,5 +1,6 @@
 package com.holy.interestingdemo.funnywrite;
 
+import android.database.Cursor;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +12,15 @@ import android.view.View;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.adapter.WriteListAdapter;
 import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
+import com.holy.interestingdemo.funnywrite.database.DatabaseConstant;
+import com.holy.interestingdemo.funnywrite.database.DatabaseManager;
+import com.holy.interestingdemo.funnywrite.database.DatabaseUtils;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewUpLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class WriteListActivity extends AppCompatActivity {
 
@@ -24,6 +29,7 @@ public class WriteListActivity extends AppCompatActivity {
     private List<WritePageItemBean> list;
     private WriteListAdapter adapter;
     private LinearLayoutManager mLayoutManager;
+    private DatabaseManager databaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +41,8 @@ public class WriteListActivity extends AppCompatActivity {
     }
 
     private void getData(){
-        list = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            WritePageItemBean writePageItemBean = new WritePageItemBean();
-            writePageItemBean.setName("我的故事"+i);
-            writePageItemBean.setPageNum(20);
-            list.add(writePageItemBean);
-        }
+        databaseManager = new DatabaseManager(this);
+        list = getDataFromSQLite(new ArrayList<>());
     }
 
     private void initView(){
@@ -57,6 +58,10 @@ public class WriteListActivity extends AppCompatActivity {
         if (list.size()<=0) return;
         adapter = new WriteListAdapter(this,list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
+            @Override
+            public void OnItemLongClick(View view, int position, Object data) {
+                super.OnItemLongClick(view, position, data);
+            }
 
             @Override
             public void onItemClick(View view, int position, Object data){
@@ -75,14 +80,33 @@ public class WriteListActivity extends AppCompatActivity {
             @Override
             public void onLoadMore(int currentPage) {
 
-                for (int i = 0; i < 15; i++) {
-                    WritePageItemBean writePageItemBean = new WritePageItemBean();
-                    writePageItemBean.setName("我的新故事"+i);
-                    writePageItemBean.setPageNum(10);
-                    list.add(writePageItemBean);
-                }
-                adapter.notifyDataSetChanged();
+//                for (int i = 0; i < 15; i++) {
+//                    WritePageItemBean writePageItemBean = new WritePageItemBean();
+//                    writePageItemBean.setName("我的新故事"+i);
+//                    list.add(writePageItemBean);
+//                }
+//                adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    /**
+     * 查库填数据
+     * @param list
+     * @return
+     */
+    private List<WritePageItemBean> getDataFromSQLite(List<WritePageItemBean> list){
+        String table = DatabaseConstant.NOVEL_INFO_TABLE;
+        Cursor cs = databaseManager.queryAll("NovelInfo");
+        List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,"NovelInfo");
+        for (int i = 0; i < dataList.size(); i++) {
+            WritePageItemBean writePageItemBean = new WritePageItemBean();
+            writePageItemBean.setNovelId(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));
+            writePageItemBean.setName(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[1]));
+            writePageItemBean.setType(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
+            writePageItemBean.setTitleImage(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[5]));
+            list.add(writePageItemBean);
+        }
+        return list;
     }
 }

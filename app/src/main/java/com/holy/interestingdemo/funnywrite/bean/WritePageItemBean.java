@@ -8,9 +8,33 @@ import java.io.Serializable;
 
 public class WritePageItemBean implements Serializable {
 
+    private String novelId;
     private String name;
-    private int pageNum;
+    private String type;
     private String titleImage;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"novelId\":\"")
+                .append(novelId).append('\"');
+        sb.append(",\"name\":\"")
+                .append(name).append('\"');
+        sb.append(",\"type\":\"")
+                .append(type).append('\"');
+        sb.append(",\"titleImage\":\"")
+                .append(titleImage).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public String getNovelId() {
+        return novelId;
+    }
+
+    public void setNovelId(String novelId) {
+        this.novelId = novelId;
+    }
 
     public String getName() {
         return name;
@@ -20,12 +44,12 @@ public class WritePageItemBean implements Serializable {
         this.name = name;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public String getType() {
+        return type;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitleImage() {
@@ -35,18 +59,4 @@ public class WritePageItemBean implements Serializable {
     public void setTitleImage(String titleImage) {
         this.titleImage = titleImage;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"name\":\"")
-                .append(name).append('\"');
-        sb.append(",\"pageNum\":")
-                .append(pageNum);
-        sb.append(",\"titleImage\":\"")
-                .append(titleImage).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
-
 }
