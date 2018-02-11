@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.holy.interestingdemo">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".mainInfo.MainApplication"
@@ -25,7 +25,11 @@
             android:label="@string/title_activity_write_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".funnywrite.WriteAddActivity" />
-        <activity android:name=".funnywrite.WriteListActivity"></activity>
+        <activity android:name=".funnywrite.WriteListActivity" />
+        <activity
+            android:name=".funnywrite.WriteDetailActivity"
+            android:label="@string/title_activity_write_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

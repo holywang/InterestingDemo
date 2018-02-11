@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.holy.interestingdemo.funnywrite.WriteDetailActivity"
+    tools:showIn="@layout/activity_write_detail">
+    <TextView
+        android:id="@+id/write_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:text="title"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/write_detail_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:gravity="center"
+        android:text="style"/>
+    <TextView
+        android:id="@+id/write_detail_des"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:gravity="center"
+        android:text="description"/>
+    <Button
+        android:id="@+id/write_detail_write"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:text="写小说"/>
+    <Button
+        android:id="@+id/write_detail_read"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:text="读小说"/>
+    <Button
+        android:id="@+id/write_detail_file"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:text="生成文件"/>
+
+</LinearLayout>

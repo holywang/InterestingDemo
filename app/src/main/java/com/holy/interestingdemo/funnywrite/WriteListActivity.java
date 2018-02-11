@@ -1,5 +1,9 @@
 package com.holy.interestingdemo.funnywrite;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -59,13 +63,11 @@ public class WriteListActivity extends AppCompatActivity {
         adapter = new WriteListAdapter(this,list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
             @Override
-            public void OnItemLongClick(View view, int position, Object data) {
-                super.OnItemLongClick(view, position, data);
-            }
-
-            @Override
             public void onItemClick(View view, int position, Object data){
-                Snackbar.make(view,list.get(position).getName(),Snackbar.LENGTH_SHORT).show();
+                Intent it = new Intent();
+                it.setClass(WriteListActivity.this,WriteDetailActivity.class);
+                it.putExtra("data",(WritePageItemBean)data);
+                startActivity(it);
             }
         });
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -80,12 +82,6 @@ public class WriteListActivity extends AppCompatActivity {
             @Override
             public void onLoadMore(int currentPage) {
 
-//                for (int i = 0; i < 15; i++) {
-//                    WritePageItemBean writePageItemBean = new WritePageItemBean();
-//                    writePageItemBean.setName("我的新故事"+i);
-//                    list.add(writePageItemBean);
-//                }
-//                adapter.notifyDataSetChanged();
             }
         });
     }
