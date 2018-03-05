@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.funnyplayer.PlayerActivity;
 import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private void initAdapter(){
         List<String> list = new ArrayList<>();
         list.add("神奇的小说编辑器");
+        list.add("一个功能挺不错的视频播放器");
 
         MainPageAdapter adapter = new MainPageAdapter(this,list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         it.setClass(MainActivity.this, WriteActivity.class);
+                        break;
+                    case 1:
+                        it.setClass(MainActivity.this, PlayerActivity.class);
                         break;
                 }
                 startActivity(it);

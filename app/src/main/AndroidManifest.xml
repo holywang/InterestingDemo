@@ -29,7 +29,10 @@
         <activity
             android:name=".funnywrite.WriteDetailActivity"
             android:label="@string/title_activity_write_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".funnyplayer.PlayerActivity"
+            ></activity>
     </application>
 
 </manifest>
