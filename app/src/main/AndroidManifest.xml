@@ -31,7 +31,7 @@
             android:label="@string/title_activity_write_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".funnyplayer.PlayerActivity"
+            android:name=".funnyplayer.PlayerListActivity"
             ></activity>
     </application>
 

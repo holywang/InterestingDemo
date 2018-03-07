@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.funnyplayer.PlayerActivity;
+import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
 import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         it.setClass(MainActivity.this, WriteActivity.class);
                         break;
                     case 1:
-                        it.setClass(MainActivity.this, PlayerActivity.class);
+                        it.setClass(MainActivity.this, PlayerListActivity.class);
                         break;
                 }
                 startActivity(it);

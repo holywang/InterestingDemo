@@ -5,7 +5,6 @@ package com.holy.interestingdemo.funnyplayer.view;
  */
 
 public interface IPlayerView {
-    public void onInfoUpdate(String info);
 
     public void showWaitingDialog();
 

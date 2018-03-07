@@ -11,8 +11,4 @@ public class PlayerListModelImpl implements IPlayerListModel{
         return null;
     }
 
-    @Override
-    public void setPlayerList(String info) {
-
-    }
 }
