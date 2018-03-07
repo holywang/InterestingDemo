@@ -1,5 +1,6 @@
 package com.holy.interestingdemo.funnyplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -59,6 +60,11 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
             @Override
             public void onItemClick(View view, int position, Object data) {
                 Snackbar.make(view,"这是第"+position+"项",Snackbar.LENGTH_LONG).show();
+                Intent it = new Intent();
+                it.setClass(PlayerListActivity.this,VideoPlayActivity.class);
+                it.putExtra("url", mediaList.get(position).getPath());
+                it.putExtra("name",mediaList.get(position).getName());
+                startActivity(it);
             }
         });
         playerRefreshView.setColorSchemeResources(

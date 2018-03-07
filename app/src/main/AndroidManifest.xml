@@ -30,9 +30,8 @@
             android:name=".funnywrite.WriteDetailActivity"
             android:label="@string/title_activity_write_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".funnyplayer.PlayerListActivity"
-            ></activity>
+        <activity android:name=".funnyplayer.PlayerListActivity" />
+        <activity android:name=".funnyplayer.VideoPlayActivity"></activity>
     </application>
 
 </manifest>
