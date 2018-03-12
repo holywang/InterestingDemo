@@ -5,12 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.holy.interestingdemo.funnyplayer.VideoPlayActivity">
 
+    <TextureView
+        android:id="@+id/player_texture_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
     <Button
         android:id="@+id/video_player_back"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:text="<"
-        android:textSize="20dp"/>
+        android:text="back"
+        android:alpha="0.3"
+        />
 
 </RelativeLayout>
