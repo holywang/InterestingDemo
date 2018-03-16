@@ -9,15 +9,20 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.utils.TimeUtil;
 
 import java.io.IOException;
 
-public class VideoPlayActivity extends PlayerBaseActivity implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener{
+public class VideoPlayActivity extends PlayerBaseActivity implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener {
 
-    private Button backBtn;
+    private Button backBtn, lastBtn, pauseBtn, nextBtn;
     private TextureView playerTextureView;
+    private SeekBar videoProgress;
+    private TextView timeText;
 
     private MediaPlayer mediaPlayer;
 
@@ -36,7 +41,7 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
         setListener();
     }
 
-    private void setDefaultSetting(){
+    private void setDefaultSetting() {
         dataIntent = getIntent();
         getWindow()
                 .getDecorView()
@@ -50,20 +55,49 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    private void initView(){
+    private void initView() {
         backBtn = findViewById(R.id.video_player_back);
         playerTextureView = findViewById(R.id.player_texture_view);
-
+        lastBtn = findViewById(R.id.video_player_last);
+        pauseBtn = findViewById(R.id.video_player_pause);
+        nextBtn = findViewById(R.id.video_player_next);
+        videoProgress = findViewById(R.id.video_player_progress);
+        timeText = findViewById(R.id.video_player_time);
     }
 
-    private void setListener(){
-        backBtn.setOnClickListener(view -> {
-            finish();
-        });
+    private void setListener() {
+        backBtn.setOnClickListener(view -> finish());
         playerTextureView.setSurfaceTextureListener(this);
+
+        videoProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.seekTo(seekBar.getProgress());
+                }
+
+            }
+        });
+
+
     }
 
-    private void doPlay(){
+    /**
+     * 播放
+     */
+    private void doPlay() {
         if (mediaPlayer == null) {
             mTexture = playerTextureView.getSurfaceTexture();
             surface = new Surface(mTexture);
@@ -71,7 +105,10 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
         }
     }
 
-    private void initMediaPlayer(){
+    /**
+     * 初始化MediaPlayer
+     */
+    private void initMediaPlayer() {
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(dataIntent.getStringExtra("url"));
@@ -95,6 +132,7 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
             e.printStackTrace();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -111,7 +149,7 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
         }
         if (mediaPlayer != null) {
             mediaPlayer.release();
-            mediaPlayer =null;
+            mediaPlayer = null;
         }
     }
 

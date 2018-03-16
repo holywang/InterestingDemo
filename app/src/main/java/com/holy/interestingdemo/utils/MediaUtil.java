@@ -61,6 +61,11 @@ public class MediaUtil {
         return list;
     }
 
+    /**
+     * 字节切换成MB
+     * @param inputByte
+     * @return
+     */
     public static float changeToMB(long inputByte){
         float output = (inputByte / 1000)/1024;
         return (float)(Math.round(output*100))/100;
