@@ -6,6 +6,7 @@ import android.util.Log;
 import com.holy.interestingdemo.funnyplayer.model.IPlayerListModel;
 import com.holy.interestingdemo.funnyplayer.model.PlayerListModelImpl;
 import com.holy.interestingdemo.funnyplayer.view.IPlayerView;
+import com.holy.interestingdemo.utils.L;
 import com.holy.interestingdemo.utils.MediaUtil;
 
 import java.io.File;
@@ -24,11 +25,7 @@ public class PlayerListPresenter extends BasePresenter {
 
     public PlayerListPresenter(IPlayerView iPlayerView) {
         this.iPlayerView = iPlayerView;
-        iPlayerListModel = new PlayerListModelImpl();
-    }
-
-    public void getPlayerList(){
-        iPlayerListModel.getPlayerList();
+        iPlayerListModel = PlayerListModelImpl.getInstance();
     }
 
     public void showWaitingDialog(){
@@ -49,14 +46,7 @@ public class PlayerListPresenter extends BasePresenter {
      * @return
      */
     public List<File> getMp3FileList (Context context){
-        List<File> list = MediaUtil.getAudioFromLocalStorage(context);
-        List<File> mp3List = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Log.i(TAG, list.get(i).getName());
-            if (list.get(i).getName().endsWith(".mp3")) {
-                mp3List.add(list.get(i));
-            }
-        }
+        List<File> mp3List = iPlayerListModel.getMp3List(context);
         return mp3List;
     }
 
@@ -66,15 +56,24 @@ public class PlayerListPresenter extends BasePresenter {
      * @return
      */
     public List<File> getMp4FileList (Context context){
-        List<File> list = MediaUtil.getVideoFromLocalStorage(context);
-        List<File> mp4List = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Log.i(TAG, list.get(i).getName());
-            if (list.get(i).getName().endsWith(".mp4")) {
-                mp4List.add(list.get(i));
-            }
-        }
+        List<File> mp4List = iPlayerListModel.getMp4List(context);
         return mp4List;
+    }
+
+    /**
+     * 给Model里的List赋值
+     * @param filesList
+     */
+    public void setList(List<File> filesList){
+        ((PlayerListModelImpl) iPlayerListModel).setMediaList(filesList);
+    }
+
+    /**
+     * 获取当前MediaList
+     * @return
+     */
+    public List<File> getMediaList(){
+        return ((PlayerListModelImpl) iPlayerListModel).getMediaList();
     }
 
 }

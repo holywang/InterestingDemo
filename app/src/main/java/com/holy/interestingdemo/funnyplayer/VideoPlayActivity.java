@@ -4,33 +4,52 @@ import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.utils.TimeUtil;
+import com.holy.interestingdemo.funnyplayer.presenter.VideoPlayerPresenter;
+import com.holy.interestingdemo.funnyplayer.view.IVideoPlay;
+import com.holy.interestingdemo.utils.L;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class VideoPlayActivity extends PlayerBaseActivity implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener {
+public class VideoPlayActivity extends PlayerBaseActivity
+        implements
+        TextureView.SurfaceTextureListener,
+        MediaPlayer.OnPreparedListener,
+        IVideoPlay,
+        SeekBar.OnSeekBarChangeListener
 
+{
+
+    private final static String TAG = "VideoPlayActivity";
     private Button backBtn, lastBtn, pauseBtn, nextBtn;
     private TextureView playerTextureView;
     private SeekBar videoProgress;
     private TextView timeText;
 
     private MediaPlayer mediaPlayer;
-
-    private Intent dataIntent;
-
     private SurfaceTexture mTexture;
     private SurfaceHolder holder;
     private Surface surface;
+    private VideoPlayerPresenter videoPlayerPresenter;
+
+    private Intent dataIntent;
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+
+    private boolean onPauseFlag = false;
+    private int pauseProgress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +72,8 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
+
     }
 
     private void initView() {
@@ -68,58 +89,56 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
     private void setListener() {
         backBtn.setOnClickListener(view -> finish());
         playerTextureView.setSurfaceTextureListener(this);
-
-        videoProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                    mediaPlayer.seekTo(seekBar.getProgress());
-                }
-
-            }
-        });
+        videoProgress.setOnSeekBarChangeListener(this);
+        pauseBtn.setOnClickListener(view -> pause());
+        lastBtn.setOnClickListener(view -> videoPlayerPresenter.last(view));
+        nextBtn.setOnClickListener(view -> videoPlayerPresenter.next(view));
 
 
     }
 
-    /**
-     * 播放
-     */
-    private void doPlay() {
-        if (mediaPlayer == null) {
-            mTexture = playerTextureView.getSurfaceTexture();
-            surface = new Surface(mTexture);
-            initMediaPlayer();
-        }
-    }
-
-    /**
-     * 初始化MediaPlayer
-     */
-    private void initMediaPlayer() {
+    @Override
+    public void mediaPlay(String url) {
         try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(dataIntent.getStringExtra("url"));
-            mediaPlayer.setSurface(surface);
-            mediaPlayer.prepareAsync();
-            mediaPlayer.setOnPreparedListener(this);
-            mediaPlayer.setLooping(true);
+            if (mediaPlayer == null) {
+                mTexture = playerTextureView.getSurfaceTexture();
+                surface = new Surface(mTexture);
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.setSurface(surface);
+                mediaPlayer.prepareAsync();
+                mediaPlayer.setOnPreparedListener(this);
+                mediaPlayer.setOnVideoSizeChangedListener((mediaPlayer, width, height) -> {
+                    if (width == 0 || height == 0) {
+                        return;
+                    }
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            (playerTextureView.getHeight() * width) / height,
+                            playerTextureView.getHeight()
+                    );
+                    playerTextureView.setLayoutParams(lp);
+                });
+                mediaPlayer.setLooping(true);
+
+                videoProgress.setMax(mediaPlayer.getDuration());
+            }
         } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    }
+
+    @Override
+    public void mediaRelease() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
+    public void showSnackBar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -137,7 +156,8 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
     protected void onResume() {
         super.onResume();
         if (playerTextureView.isAvailable()) {
-            doPlay();
+            videoPlayerPresenter.startNewVideo();
+
         }
     }
 
@@ -155,7 +175,7 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        doPlay();
+        videoPlayerPresenter.startNewVideo();
     }
 
     @Override
@@ -177,4 +197,43 @@ public class VideoPlayActivity extends PlayerBaseActivity implements TextureView
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    /**
+     * 播放暂停/续播
+     */
+    private void pause() {
+        if (onPauseFlag == false) {
+            mediaPlayer.pause();
+            onPauseFlag = true;
+            pauseProgress = mediaPlayer.getCurrentPosition();
+            pauseBtn.setText("restart");
+        } else {
+            mediaPlayer.seekTo(pauseProgress + 1);
+            mediaPlayer.start();
+            onPauseFlag = false;
+            pauseBtn.setText("pause");
+        }
+        L.i(TAG,"Duration :--->"+mediaPlayer.getDuration());
+        L.i(TAG, "CurrentPosition :--->"+mediaPlayer.getCurrentPosition());
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.seekTo(seekBar.getProgress());
+            mediaPlayer.start();
+        }
+    }
+
+
 }

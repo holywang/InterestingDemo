@@ -5,61 +5,68 @@
     android:layout_height="match_parent"
     tools:context="com.holy.interestingdemo.funnyplayer.VideoPlayActivity">
 
-    <TextureView
-        android:id="@+id/player_texture_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#555555"
+        android:orientation="horizontal">
+
+        <TextureView
+            android:id="@+id/player_texture_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/video_player_back"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:text="back"
         android:alpha="0.3"
-        />
+        android:text="back" />
+
     <Button
         android:id="@+id/video_player_last"
         android:layout_width="70dp"
         android:layout_height="60dp"
-        android:layout_marginTop="350dp"
         android:layout_marginLeft="40dp"
-        android:text="last"
+        android:layout_marginTop="350dp"
         android:alpha="0.8"
-        />
+        android:text="last" />
+
     <Button
         android:id="@+id/video_player_pause"
         android:layout_width="70dp"
         android:layout_height="60dp"
-        android:layout_marginTop="350dp"
         android:layout_marginLeft="140dp"
-        android:text="pause"
+        android:layout_marginTop="350dp"
         android:alpha="0.8"
-        />
+        android:text="pause" />
+
     <Button
         android:id="@+id/video_player_next"
         android:layout_width="70dp"
         android:layout_height="60dp"
-        android:layout_marginTop="350dp"
         android:layout_marginLeft="240dp"
-        android:text="next"
+        android:layout_marginTop="350dp"
         android:alpha="0.8"
-        />
+        android:text="next" />
 
     <TextView
         android:id="@+id/video_player_time"
-        android:layout_height="60dp"
         android:layout_width="wrap_content"
-        android:layout_marginTop="350dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="330dp"
+        android:layout_marginTop="350dp"
         android:gravity="center"
-        android:text="next"/>
+        android:text="next" />
 
 
     <SeekBar
         android:id="@+id/video_player_progress"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="250dp"/>
+        android:layout_marginTop="250dp" />
 
 </RelativeLayout>

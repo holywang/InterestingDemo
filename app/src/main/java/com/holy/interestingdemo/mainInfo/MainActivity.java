@@ -12,6 +12,7 @@ import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
 import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.webview.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> list = new ArrayList<>();
         list.add("神奇的小说编辑器");
         list.add("一个功能挺不错的视频播放器");
+        list.add("WebView详解");
 
         MainPageAdapter adapter = new MainPageAdapter(this,list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         it.setClass(MainActivity.this, PlayerListActivity.class);
+                        break;
+                    case 2:
+                        it.setClass(MainActivity.this, WebViewActivity.class);
                         break;
                 }
                 startActivity(it);

@@ -26,7 +26,6 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
     private RecyclerView playerList;
 
     private PlayerListPresenter presenter;
-    private List<File> mediaList;
     private LinearLayoutManager mLayoutManager;
     private PlayerListAdapter adapter;
 
@@ -50,28 +49,30 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
     public void addAction() {
         L.i(TAG, "addAction");
         presenter = new PlayerListPresenter(this);
-        mediaList = presenter.getMp4FileList(this);
+        presenter.setList(presenter.getMp4FileList(this));
         setListView();
     }
 
     private void setListView(){
-        adapter = new PlayerListAdapter(this,mediaList);
+        L.i(TAG, "setListView");
+        adapter = new PlayerListAdapter(this,presenter.getMediaList());
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
             @Override
             public void onItemClick(View view, int position, Object data) {
-                Snackbar.make(view,"这是第"+position+"项",Snackbar.LENGTH_LONG).show();
+               // Snackbar.make(view,"这是第"+position+"项",Snackbar.LENGTH_LONG).show();
                 Intent it = new Intent();
                 it.setClass(PlayerListActivity.this,VideoPlayActivity.class);
-                it.putExtra("url", mediaList.get(position).getPath());
-                it.putExtra("name",mediaList.get(position).getName());
+                it.putExtra("url", presenter.getMediaList().get(position).getPath());
+                it.putExtra("name",presenter.getMediaList().get(position).getName());
+                it.putExtra("position",position);
                 startActivity(it);
             }
         });
         playerRefreshView.setColorSchemeResources(
                 R.color.colorAccent,R.color.colorPrimary
         );
-        if (mediaList.isEmpty()) return;
-        if (mediaList.size()<=0) return;
+        if (presenter.getMediaList().isEmpty()) return;
+        if (presenter.getMediaList().size()<=0) return;
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         playerList.setHasFixedSize(true);
         playerList.setLayoutManager(mLayoutManager);
