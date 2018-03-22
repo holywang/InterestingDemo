@@ -17,11 +17,11 @@ import android.widget.TextView;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnyplayer.presenter.VideoPlayerPresenter;
 import com.holy.interestingdemo.funnyplayer.view.IVideoPlay;
+import com.holy.interestingdemo.mainInfo.MainApplication;
 import com.holy.interestingdemo.utils.L;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class VideoPlayActivity extends PlayerBaseActivity
         implements
@@ -32,11 +32,12 @@ public class VideoPlayActivity extends PlayerBaseActivity
 
 {
 
-    private final static String TAG = "VideoPlayActivity";
+    private final static String TAG = MainApplication.APP_TAG + "VideoPlayActivity";
+
     private Button backBtn, lastBtn, pauseBtn, nextBtn;
     private TextureView playerTextureView;
     private SeekBar videoProgress;
-    private TextView timeText;
+    private TextView timeText,currentText;
 
     private MediaPlayer mediaPlayer;
     private SurfaceTexture mTexture;
@@ -45,10 +46,10 @@ public class VideoPlayActivity extends PlayerBaseActivity
     private VideoPlayerPresenter videoPlayerPresenter;
 
     private Intent dataIntent;
-    private Timer mTimer;
-    private TimerTask mTimerTask;
+    private Thread td;
 
     private boolean onPauseFlag = false;
+    private boolean isStop = false;
     private int pauseProgress = 0;
 
     @Override
@@ -58,6 +59,10 @@ public class VideoPlayActivity extends PlayerBaseActivity
         setDefaultSetting();
         initView();
         setListener();
+        videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
+        if (playerTextureView.isAvailable()) {
+            videoPlayerPresenter.startNewVideo();
+        }
     }
 
     private void setDefaultSetting() {
@@ -72,8 +77,6 @@ public class VideoPlayActivity extends PlayerBaseActivity
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
-
     }
 
     private void initView() {
@@ -84,6 +87,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
         nextBtn = findViewById(R.id.video_player_next);
         videoProgress = findViewById(R.id.video_player_progress);
         timeText = findViewById(R.id.video_player_time);
+        currentText = findViewById(R.id.video_player_current);
     }
 
     private void setListener() {
@@ -91,8 +95,14 @@ public class VideoPlayActivity extends PlayerBaseActivity
         playerTextureView.setSurfaceTextureListener(this);
         videoProgress.setOnSeekBarChangeListener(this);
         pauseBtn.setOnClickListener(view -> pause());
-        lastBtn.setOnClickListener(view -> videoPlayerPresenter.last(view));
-        nextBtn.setOnClickListener(view -> videoPlayerPresenter.next(view));
+        lastBtn.setOnClickListener(view -> {
+            isStop = true;
+            videoPlayerPresenter.last(view);
+        });
+        nextBtn.setOnClickListener(view -> {
+            isStop = true;
+            videoPlayerPresenter.next(view);
+        });
 
 
     }
@@ -119,8 +129,6 @@ public class VideoPlayActivity extends PlayerBaseActivity
                     playerTextureView.setLayoutParams(lp);
                 });
                 mediaPlayer.setLooping(true);
-
-                videoProgress.setMax(mediaPlayer.getDuration());
             }
         } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e1) {
             e1.printStackTrace();
@@ -146,6 +154,16 @@ public class VideoPlayActivity extends PlayerBaseActivity
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.start(); //视频开始播放
+                isStop = false;
+
+                videoProgress.setMax(mediaPlayer.getDuration());
+                timeText.setText(""+mediaPlayer.getDuration());
+
+                L.i(TAG, "媒体时长：" + mediaPlayer.getDuration());
+
+                td = new Thread(new SeekBarThread());
+                td.start();
+                L.i(TAG, "td start");
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -155,10 +173,6 @@ public class VideoPlayActivity extends PlayerBaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (playerTextureView.isAvailable()) {
-            videoPlayerPresenter.startNewVideo();
-
-        }
     }
 
     @Override
@@ -171,6 +185,12 @@ public class VideoPlayActivity extends PlayerBaseActivity
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaRelease();
     }
 
     @Override
@@ -206,15 +226,17 @@ public class VideoPlayActivity extends PlayerBaseActivity
             mediaPlayer.pause();
             onPauseFlag = true;
             pauseProgress = mediaPlayer.getCurrentPosition();
+            isStop = true;
             pauseBtn.setText("restart");
         } else {
             mediaPlayer.seekTo(pauseProgress + 1);
             mediaPlayer.start();
             onPauseFlag = false;
+            isStop = false;
             pauseBtn.setText("pause");
         }
-        L.i(TAG,"Duration :--->"+mediaPlayer.getDuration());
-        L.i(TAG, "CurrentPosition :--->"+mediaPlayer.getCurrentPosition());
+        L.i(TAG, "Duration :--->" + mediaPlayer.getDuration());
+        L.i(TAG, "CurrentPosition :--->" + mediaPlayer.getCurrentPosition());
     }
 
     @Override
@@ -236,4 +258,27 @@ public class VideoPlayActivity extends PlayerBaseActivity
     }
 
 
+    private class SeekBarThread implements Runnable {
+
+        @Override
+        public void run() {
+            L.i(TAG,"come in run :--->"+mediaPlayer.getCurrentPosition());
+            L.i(TAG,"isStop :--->"+isStop);
+            while (mediaPlayer != null && isStop == false) {
+                // 将SeekBar位置设置到当前播放位置
+                videoProgress.setProgress(mediaPlayer.getCurrentPosition());
+                currentText.setText(""+mediaPlayer.getCurrentPosition());
+
+                L.i(TAG,"current:===>"+mediaPlayer.getCurrentPosition());
+                try {
+                    // 每100毫秒更新一次位置
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+    }
 }

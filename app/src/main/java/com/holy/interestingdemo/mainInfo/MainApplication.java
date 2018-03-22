@@ -7,6 +7,9 @@ import android.app.Application;
  */
 
 public class MainApplication extends Application {
+
+    public final static String APP_TAG = "HolyWangInterestingDemo---";
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -21,10 +21,12 @@ import java.util.List;
  * created by holy·wang 2018/01/18
  */
 public class MainActivity extends AppCompatActivity {
+    private final static String TAG = MainApplication.APP_TAG + "MainActivity";
 
     private RecyclerView recyclerView;
 
     private LinearLayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,24 +35,24 @@ public class MainActivity extends AppCompatActivity {
         initAdapter();
     }
 
-    private void initView(){
+    private void initView() {
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView = findViewById(R.id.button_List);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         List<String> list = new ArrayList<>();
         list.add("神奇的小说编辑器");
         list.add("一个功能挺不错的视频播放器");
         list.add("WebView详解");
 
-        MainPageAdapter adapter = new MainPageAdapter(this,list);
-        adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
+        MainPageAdapter adapter = new MainPageAdapter(this, list);
+        adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Object data) {
                 Intent it = new Intent();
-                switch (position){
+                switch (position) {
                     case 0:
                         it.setClass(MainActivity.this, WriteActivity.class);
                         break;
