@@ -19,6 +19,7 @@ import com.holy.interestingdemo.funnyplayer.presenter.VideoPlayerPresenter;
 import com.holy.interestingdemo.funnyplayer.view.IVideoPlay;
 import com.holy.interestingdemo.mainInfo.MainApplication;
 import com.holy.interestingdemo.utils.L;
+import com.holy.interestingdemo.utils.TimeUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
     private Button backBtn, lastBtn, pauseBtn, nextBtn;
     private TextureView playerTextureView;
     private SeekBar videoProgress;
-    private TextView timeText,currentText;
+    private TextView timeText, currentText;
 
     private MediaPlayer mediaPlayer;
     private SurfaceTexture mTexture;
@@ -60,7 +61,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
         initView();
         setListener();
         videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
-        videoPlayerPresenter.setCurrentPosition(dataIntent.getIntExtra("position",0));
+        videoPlayerPresenter.setCurrentPosition(dataIntent.getIntExtra("position", 0));
         if (playerTextureView.isAvailable()) {
             videoPlayerPresenter.startNewVideo();
         }
@@ -158,7 +159,8 @@ public class VideoPlayActivity extends PlayerBaseActivity
                 isStop = false;
 
                 videoProgress.setMax(mediaPlayer.getDuration());
-                timeText.setText(""+mediaPlayer.getDuration());
+                String maxTime = TimeUtil.changeToString(mediaPlayer.getDuration());
+                timeText.setText(maxTime);
 
                 L.i(TAG, "媒体时长：" + mediaPlayer.getDuration());
 
@@ -192,6 +194,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
     protected void onDestroy() {
         super.onDestroy();
         mediaRelease();
+        isStop = true;
     }
 
     @Override
@@ -261,11 +264,15 @@ public class VideoPlayActivity extends PlayerBaseActivity
 
         @Override
         public void run() {
-
             while (mediaPlayer != null && isStop == false) {
                 // 将SeekBar位置设置到当前播放位置
-                videoProgress.setProgress(mediaPlayer.getCurrentPosition());
-                runOnUiThread(() -> currentText.setText(""+mediaPlayer.getCurrentPosition()));
+                runOnUiThread(() -> {
+                    if (videoProgress != null && mediaPlayer != null) {
+                        videoProgress.setProgress(mediaPlayer.getCurrentPosition());
+                        String time = TimeUtil.changeToString(mediaPlayer.getCurrentPosition());
+                        currentText.setText(time);
+                    }
+                });
                 try {
                     // 每100毫秒更新一次位置
                     Thread.sleep(100);
