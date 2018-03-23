@@ -60,6 +60,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
         initView();
         setListener();
         videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
+        videoPlayerPresenter.setCurrentPosition(dataIntent.getIntExtra("position",0));
         if (playerTextureView.isAvailable()) {
             videoPlayerPresenter.startNewVideo();
         }
@@ -163,7 +164,7 @@ public class VideoPlayActivity extends PlayerBaseActivity
 
                 td = new Thread(new SeekBarThread());
                 td.start();
-                L.i(TAG, "td start");
+
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -235,8 +236,6 @@ public class VideoPlayActivity extends PlayerBaseActivity
             isStop = false;
             pauseBtn.setText("pause");
         }
-        L.i(TAG, "Duration :--->" + mediaPlayer.getDuration());
-        L.i(TAG, "CurrentPosition :--->" + mediaPlayer.getCurrentPosition());
     }
 
     @Override
@@ -262,14 +261,11 @@ public class VideoPlayActivity extends PlayerBaseActivity
 
         @Override
         public void run() {
-            L.i(TAG,"come in run :--->"+mediaPlayer.getCurrentPosition());
-            L.i(TAG,"isStop :--->"+isStop);
+
             while (mediaPlayer != null && isStop == false) {
                 // 将SeekBar位置设置到当前播放位置
                 videoProgress.setProgress(mediaPlayer.getCurrentPosition());
-                currentText.setText(""+mediaPlayer.getCurrentPosition());
-
-                L.i(TAG,"current:===>"+mediaPlayer.getCurrentPosition());
+                runOnUiThread(() -> currentText.setText(""+mediaPlayer.getCurrentPosition()));
                 try {
                     // 每100毫秒更新一次位置
                     Thread.sleep(100);
