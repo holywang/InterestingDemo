@@ -19,15 +19,17 @@ public class TimeUtil {
 
     private final static String TAG = MainApplication.APP_TAG + "TimeUtil";
 
-    public static String changeToString(int time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        String timeStr = sdf.format(new Date(time));
-        L.i(TAG, timeStr);
-        return timeStr;
-    }
-
 //    public static String changeToString(int time) {
-//        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
-//        return dateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+//        L.i(TAG, "time:"+time);
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+//        String timeStr = sdf.format(new Date(time));
+//        L.i(TAG, "timeStr:"+timeStr);
+//        return timeStr;
 //    }
+
+    public static String changeToString(int time) {
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
+
+        return dateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+    }
 }

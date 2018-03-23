@@ -235,6 +235,10 @@ public class VideoPlayActivity extends PlayerBaseActivity
         } else {
             mediaPlayer.seekTo(pauseProgress + 1);
             mediaPlayer.start();
+
+            td = new Thread(new SeekBarThread());
+            td.start();
+
             onPauseFlag = false;
             isStop = false;
             pauseBtn.setText("pause");
