@@ -33,7 +33,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".funnyplayer.PlayerListActivity" />
         <activity android:name=".funnyplayer.VideoPlayActivity" />
-        <activity android:name=".webview.WebViewActivity"></activity>
+        <activity android:name=".webview.WebViewActivity" />
+
+        <service
+            android:name=".newprogressplayer.service.MyMediaService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":media_player" />
+
+        <activity android:name=".newprogressplayer.MusicPlayerActivity"></activity>
     </application>
 
 </manifest>
