@@ -15,7 +15,7 @@ public class MyMediaService extends Service implements MediaInterface,MediaPlaye
 
     private final static String TAG = "media_service";
 
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
     private MediaPresenter mediaPresenter;
 
@@ -39,9 +39,11 @@ public class MyMediaService extends Service implements MediaInterface,MediaPlaye
     public int onStartCommand(Intent intent, int flags, int startId) {
         String url = intent.getStringExtra("url");
         try {
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.prepareAsync();
-            mediaPresenter.play();
+            if(!mediaPlayer.isPlaying()) {
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepareAsync();
+                mediaPresenter.play();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
