@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> list = new ArrayList<>();
         list.add("神奇的小说编辑器");
         list.add("一个功能挺不错的视频播放器");
-        list.add("WebView详解");
+        list.add("WebView允许上传文件");
 
         MainPageAdapter adapter = new MainPageAdapter(this, list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
