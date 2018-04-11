@@ -1,4 +1,4 @@
-package com.holy.interestingdemo.newprogressplayer.model.interfaces;
+package com.holy.interestingdemo.mp3player.model.interfaces;
 
 import android.content.Context;
 

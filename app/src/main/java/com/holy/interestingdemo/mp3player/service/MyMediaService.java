@@ -1,16 +1,12 @@
-package com.holy.interestingdemo.newprogressplayer.service;
+package com.holy.interestingdemo.mp3player.service;
 
-import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 
-import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.newprogressplayer.presenter.MediaPresenter;
-import com.holy.interestingdemo.newprogressplayer.view.MediaInterface;
+import com.holy.interestingdemo.mp3player.presenter.MediaPresenter;
+import com.holy.interestingdemo.mp3player.view.MediaInterface;
 import com.holy.interestingdemo.utils.L;
 
 import java.io.IOException;
@@ -18,14 +14,10 @@ import java.io.IOException;
 public class MyMediaService extends Service implements MediaInterface, MediaPlayer.OnPreparedListener {
 
     private final static String TAG = "media_service";
-
     private static MediaPlayer mediaPlayer;
-    private static Notification notification;
-
     private MediaPresenter mediaPresenter;
-
     private boolean onPauseFlag = false;
-    private boolean isStop = false;
+    public static boolean isStop = false;
     private int pauseProgress = 0;
 
     @Override
@@ -33,9 +25,8 @@ public class MyMediaService extends Service implements MediaInterface, MediaPlay
         L.i(TAG, "progress on create a service");
         mediaPresenter = new MediaPresenter(this);
         mediaPresenter.initMedia();
-
     }
-
+    
     @Override
     public IBinder onBind(Intent intent) {
         return null;

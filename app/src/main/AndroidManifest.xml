@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <uses-permission android:name="com.holy.interestingdemo.newprogressplayer.receiver.NPMp3Receiver.RECEIVE"/>
+
     <application
         android:name=".mainInfo.MainApplication"
         android:allowBackup="true"
@@ -37,12 +39,25 @@
         <activity android:name=".webview.WebViewActivity" />
 
         <service
-            android:name=".newprogressplayer.service.MyMediaService"
+            android:name=".mp3player.service.MyMediaService"
             android:enabled="true"
-            android:exported="true"
-            android:process=":media_player" />
+            android:exported="true"/>
 
-        <activity android:name=".newprogressplayer.MusicPlayerActivity"></activity>
+        <activity
+            android:name=".mp3player.MusicPlayerActivity"
+            android:configChanges="orientation|screenSize"
+            ></activity>
+
+        <receiver
+            android:name=".mp3player.receiver.NPMp3Receiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="play" />
+                <action android:name="last" />
+                <action android:name="next" />
+                <action android:name="finish" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

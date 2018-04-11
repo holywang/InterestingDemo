@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.holy.interestingdemo.newprogressplayer.MusicPlayerActivity">
+    tools:context="com.holy.interestingdemo.mp3player.MusicPlayerActivity">
 
 </android.support.constraint.ConstraintLayout>

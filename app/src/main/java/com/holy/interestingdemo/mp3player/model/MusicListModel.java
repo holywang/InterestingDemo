@@ -1,9 +1,8 @@
-package com.holy.interestingdemo.newprogressplayer.model;
+package com.holy.interestingdemo.mp3player.model;
 
 import android.content.Context;
 
-import com.holy.interestingdemo.newprogressplayer.model.interfaces.MusicInterface;
-import com.holy.interestingdemo.utils.L;
+import com.holy.interestingdemo.mp3player.model.interfaces.MusicInterface;
 import com.holy.interestingdemo.utils.MediaUtil;
 
 import java.io.File;

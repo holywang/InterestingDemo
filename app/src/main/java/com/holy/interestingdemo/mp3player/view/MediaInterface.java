@@ -1,4 +1,4 @@
-package com.holy.interestingdemo.newprogressplayer.view;
+package com.holy.interestingdemo.mp3player.view;
 
 /**
  * Created by DR on 2018/4/4.

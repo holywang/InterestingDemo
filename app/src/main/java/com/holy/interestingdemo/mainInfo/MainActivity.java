@@ -12,7 +12,7 @@ import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
 import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
-import com.holy.interestingdemo.newprogressplayer.MusicPlayerActivity;
+import com.holy.interestingdemo.mp3player.MusicPlayerActivity;
 import com.holy.interestingdemo.webview.WebViewActivity;
 
 import java.util.ArrayList;

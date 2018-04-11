@@ -1,6 +1,6 @@
-package com.holy.interestingdemo.newprogressplayer.presenter;
+package com.holy.interestingdemo.mp3player.presenter;
 
-import com.holy.interestingdemo.newprogressplayer.view.MediaInterface;
+import com.holy.interestingdemo.mp3player.view.MediaInterface;
 
 /**
  * Created by DR on 2018/4/4.
