@@ -1,5 +1,7 @@
 package com.holy.interestingdemo.mp3player.receiver;
 
+import android.app.Service;
+import android.bluetooth.BluetoothClass;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,19 +15,15 @@ import com.holy.interestingdemo.mp3player.view.MediaInterface;
 
 public class NPMp3Receiver extends BroadcastReceiver {
 
-    private MediaInterface mediaInterface;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        mediaInterface = new MyMediaService();
+
         String action = intent.getAction();
         switch (action){
             case "music_play":
-                if (MyMediaService.isStop){
-                    mediaInterface.play();
-                }else{
-                    mediaInterface.pause();
-                }
+
                 break;
             case "music_last":
 
@@ -35,7 +33,7 @@ public class NPMp3Receiver extends BroadcastReceiver {
 
                 break;
             case "music_finish":
-
+                context.stopService(new Intent(context,MyMediaService.class));
                 break;
         }
     }
