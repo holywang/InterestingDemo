@@ -5,37 +5,96 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.eventbusdemo.MessageEvent;
+import com.holy.interestingdemo.mp3player.events.Mp3Event;
 import com.holy.interestingdemo.mp3player.model.MusicListModel;
 import com.holy.interestingdemo.mp3player.service.MyMediaService;
+import com.holy.interestingdemo.mp3player.view.MediaInterface;
 import com.holy.interestingdemo.utils.MediaUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicPlayerActivity extends AppCompatActivity {
+public class MusicPlayerActivity extends AppCompatActivity implements MediaInterface {
 
     private MusicListModel musicListModel;
     private Notification notification;
     private RemoteViews views;
+    private ImageView last, next, playOrPause, headImage;
+    private TextView notification_music_name,notification_music_info;
+    private Button stop;
+
+    public static int musicPosition = 0;
+    public static List<File> musicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
-        buildMusicNotification();
+        EventBus.getDefault().register(this);
         musicListModel = new MusicListModel();
+        musicList =musicListModel.getMp3List(this);
+
+        last = findViewById(R.id.notification_music_last);
+        next = findViewById(R.id.notification_music_next);
+        playOrPause = findViewById(R.id.notification_music_play);
+        headImage = findViewById(R.id.notification_head_image);
+        notification_music_name = findViewById(R.id.notification_music_name);
+        notification_music_info = findViewById(R.id.notification_music_info);
+        stop =findViewById(R.id.mp3_player_stop);
+        last.setOnClickListener(clickListener);
+        next.setOnClickListener(clickListener);
+        playOrPause.setOnClickListener(clickListener);
+        headImage.setOnClickListener(clickListener);
+        stop.setOnClickListener(clickListener);
+
         if (checkIfHaveMusic()) {
+            setMusicInfo();
             Intent intent = new Intent(this, MyMediaService.class);
-            intent.putExtra("url", musicListModel.getMp3List(this).get(0).getAbsolutePath());
+            intent.putExtra("url",musicList.get(musicPosition).getAbsolutePath());
             startService(intent);
         }
+    }
+
+    private View.OnClickListener clickListener = view -> {
+        switch (view.getId()) {
+            case R.id.notification_music_last:
+                EventBus.getDefault().postSticky(new Mp3Event(3));
+                break;
+            case R.id.notification_music_next:
+                EventBus.getDefault().postSticky(new Mp3Event(4));
+                break;
+            case R.id.notification_music_play:
+                EventBus.getDefault().postSticky(new Mp3Event(2));
+                break;
+            case R.id.notification_head_image:
+                EventBus.getDefault().postSticky(new Mp3Event(5));
+                break;
+            case R.id.mp3_player_stop:
+                EventBus.getDefault().postSticky(new MessageEvent("stop"));
+                break;
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     /**
@@ -57,42 +116,40 @@ public class MusicPlayerActivity extends AppCompatActivity {
         return false;
     }
 
-    private void buildMusicNotification() {
-        views = new RemoteViews(getPackageName(), R.layout.music_notification);
 
-        notification = new Notification();
-        notification.icon = R.mipmap.ic_launcher_round;
-        notification.contentView = views;
+    @Override
+    public void initMedia() {
 
-        Intent intentFinish = new Intent("music_finish");
-        PendingIntent pIntentFinish = PendingIntent.getBroadcast(this, 0, intentFinish, 0);
-        views.setOnClickPendingIntent(R.id.notification_finish, pIntentFinish);
-
-        Intent intentPlay = new Intent("music_play");
-        PendingIntent pIntentPlay = PendingIntent.getBroadcast(this, 0, intentPlay, 0);
-        views.setOnClickPendingIntent(R.id.notification_music_play, pIntentPlay);
-
-        Intent intentLast = new Intent("music_last");
-        PendingIntent pIntentLast = PendingIntent.getBroadcast(this, 0, intentLast, 0);
-        views.setOnClickPendingIntent(R.id.notification_music_play, pIntentLast);
-
-        Intent intentNext = new Intent("music_next");
-        PendingIntent pIntentNext = PendingIntent.getBroadcast(this, 0, intentNext, 0);
-        views.setOnClickPendingIntent(R.id.notification_music_play, pIntentNext);
-
-        notification.flags = notification.FLAG_NO_CLEAR;//设置通知点击或滑动时不被清除
-//        application.notManager.notify(Const.NOTI_CTRL_ID, notification);
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(1,notification);
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    public void play() {
+
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void stop() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Subscribe(sticky = true)
+    public void onMessageEvent(Mp3Event event) {
+        switch (event.getFlag()) {
+            case 6:
+                setMusicInfo();
+                EventBus.getDefault().removeStickyEvent(event);
+                break;
+        }
+    }
+
+    private void setMusicInfo(){
+        headImage.setImageResource(R.mipmap.ic_launcher_round);
+        notification_music_name.setText(musicList.get(musicPosition).getName());
+        notification_music_info.setText(musicList.get(musicPosition).getPath());
     }
 }

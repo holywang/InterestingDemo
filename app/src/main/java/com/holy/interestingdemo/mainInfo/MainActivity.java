@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.eventbusdemo.EventBusActivity;
 import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
 import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         list.add("一个功能挺不错的视频播放器");
         list.add("WebView允许上传文件");
         list.add("多线程MUSIC播放器");
+        list.add("EventBus的Demo");
 
         MainPageAdapter adapter = new MainPageAdapter(this, list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         it.setClass(MainActivity.this, MusicPlayerActivity.class);
+                        break;
+                    case 4:
+                        it.setClass(MainActivity.this, EventBusActivity.class);
                         break;
                 }
                 startActivity(it);
