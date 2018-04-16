@@ -45,10 +45,13 @@
         <activity
             android:name=".mp3player.MusicPlayerActivity"
             android:configChanges="orientation|screenSize" />
-
         <activity
             android:name=".eventbusdemo.EventBusActivity"
             android:label="@string/title_activity_event_bus"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".funnywrite.WriteNovelActivity"
+            android:label="@string/title_activity_write_novel"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

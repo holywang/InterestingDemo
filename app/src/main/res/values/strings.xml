@@ -7,4 +7,9 @@
     <string name="title_activity_event_bus">EventBusActivity</string>
     <string name="text_info">EventBus是一种用于Android的发布/订阅事件总线。它有很多优点：简化应用组件间的通信；解耦事件的发送者和接收者；避免复杂和容易出错的依赖和生命周期的问题；很快，专门为高性能优化过等等。</string>
     <string name="text_change">发布者通过EventBus发布事件，订阅者通过EventBus订阅事件。当发布者发布事件时，订阅该事件的订阅者的事件处理方法将被调用。</string>
+    <string name="title_activity_write_novel">WriteNovelActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

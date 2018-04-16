@@ -10,8 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.designpattern.factorypattern.base.INovels;
+import com.holy.interestingdemo.designpattern.factorypattern.factorys.NovelFactory;
 import com.holy.interestingdemo.funnywrite.adapter.WriteListAdapter;
-import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
 import com.holy.interestingdemo.funnywrite.database.DatabaseConstant;
 import com.holy.interestingdemo.funnywrite.database.DatabaseManager;
 import com.holy.interestingdemo.funnywrite.database.DatabaseUtils;
@@ -26,7 +27,10 @@ public class WriteListActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private List<WritePageItemBean> list;
+//    private List<WritePageItemBean> list;
+
+    private List<INovels> novelList;
+
     private WriteListAdapter adapter;
     private LinearLayoutManager mLayoutManager;
     private DatabaseManager databaseManager;
@@ -42,7 +46,8 @@ public class WriteListActivity extends AppCompatActivity {
 
     private void getData(){
         databaseManager = new DatabaseManager(this);
-        list = getDataFromSQLite(new ArrayList<>());
+//        list = getDataFromSQLite(new ArrayList<>());
+        novelList = getDataFromSQLite(new ArrayList<>());
     }
 
     private void initView(){
@@ -54,15 +59,15 @@ public class WriteListActivity extends AppCompatActivity {
         refreshLayout.setColorSchemeResources(
                 R.color.colorAccent,R.color.colorPrimary
         );
-        if (list.isEmpty()) return;
-        if (list.size()<=0) return;
-        adapter = new WriteListAdapter(this,list);
+        if (novelList.isEmpty()) return;
+        if (novelList.size()<=0) return;
+        adapter = new WriteListAdapter(this,novelList);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener(){
             @Override
             public void onItemClick(View view, int position, Object data){
                 Intent it = new Intent();
                 it.setClass(WriteListActivity.this,WriteDetailActivity.class);
-                it.putExtra("data",(WritePageItemBean)data);
+                it.putExtra("data",(INovels)data);
                 startActivity(it);
             }
         });
@@ -71,7 +76,7 @@ public class WriteListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(() -> {
-            list.clear();
+            novelList.clear();
             getData();
         });
         recyclerView.addOnScrollListener(new RecyclerViewUpLoadingListener(mLayoutManager){
@@ -87,18 +92,22 @@ public class WriteListActivity extends AppCompatActivity {
      * @param list
      * @return
      */
-    private List<WritePageItemBean> getDataFromSQLite(List<WritePageItemBean> list){
+    private List<INovels> getDataFromSQLite(List<INovels> list){
         String table = DatabaseConstant.NOVEL_INFO_TABLE;
         Cursor cs = databaseManager.queryAll("NovelInfo");
         List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,"NovelInfo");
         for (int i = 0; i < dataList.size(); i++) {
-            WritePageItemBean writePageItemBean = new WritePageItemBean();
-            writePageItemBean.setNovelId(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));
-            writePageItemBean.setName(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[1]));
-            writePageItemBean.setType(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
-            writePageItemBean.setTitleImage(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[5]));
-            list.add(writePageItemBean);
+            INovels novel = NovelFactory.getNovelByType(this,dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
+            novel.setNovel_id(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));
+            novel.setNovel_name(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[1]));
+            novel.setNovel_author(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[2]));
+            novel.setNovel_style(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
+            novel.setNovel_description(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[4]));
+            novel.setNovel_image(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[5]));
+            list.add(novel);
         }
         return list;
     }
+
+
 }

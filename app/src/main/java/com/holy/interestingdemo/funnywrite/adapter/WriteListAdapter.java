@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
+import com.holy.interestingdemo.designpattern.factorypattern.base.INovels;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 
 import java.util.List;
@@ -21,14 +21,14 @@ import java.util.List;
 public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
 
     private Context context;
-    private List<WritePageItemBean> list;
+    private List<INovels> list;
     private RecyclerViewOnItemClickListener listener;
 
     public void setOnItemClickListener(RecyclerViewOnItemClickListener listener) {
         this.listener = listener;
     }
 
-    public WriteListAdapter(Context context,List<WritePageItemBean> list){
+    public WriteListAdapter(Context context,List<INovels> list){
         this.context = context;
         this.list = list;
     }
@@ -43,8 +43,8 @@ public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
     public void onBindViewHolder(WriteListHolder holder, int position) {
 
 //        holder.head.setImageURI();
-        holder.bookName.setText(list.get(position).getName());
-        holder.number.setText(list.get(position).getType());
+        holder.bookName.setText(list.get(position).getNovel_name());
+        holder.number.setText(list.get(position).getNovel_style());
         holder.itemView.setOnClickListener(view -> listener.onItemClick(view,position,list.get(position)));
 
     }

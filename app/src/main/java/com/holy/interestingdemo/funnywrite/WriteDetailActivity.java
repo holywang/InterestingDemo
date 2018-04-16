@@ -8,17 +8,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.funnywrite.bean.WritePageItemBean;
+import com.holy.interestingdemo.designpattern.factorypattern.base.INovels;
 import com.holy.interestingdemo.funnywrite.database.DatabaseConstant;
 import com.holy.interestingdemo.funnywrite.database.DatabaseManager;
 import com.holy.interestingdemo.funnywrite.database.DatabaseUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +29,14 @@ public class WriteDetailActivity extends AppCompatActivity {
 
     private DatabaseManager databaseManager;
     private String novelId;
-    private Map<String,String> data;
+    private INovels data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_detail);
         databaseManager = new DatabaseManager(this);
-        getData();
+        data = (INovels) getIntent().getSerializableExtra("data");
         initView();
         setListener();
         doSth();
@@ -59,16 +57,6 @@ public class WriteDetailActivity extends AppCompatActivity {
 
     }
 
-    private void getData(){
-        List<Map<String,String>> list = getDataFromSQLite();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).get("novel_id").equals(novelId)){
-                data = list.get(i);
-                break;
-            }
-        }
-    }
-
     private void setListener(){
         fab.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(WriteDetailActivity.this);
@@ -84,34 +72,49 @@ public class WriteDetailActivity extends AppCompatActivity {
         });
         write.setOnClickListener(view -> {
             Snackbar.make(view,"写",Snackbar.LENGTH_LONG).show();
+            writeNovel();
         });
         read.setOnClickListener(view -> {
             Snackbar.make(view,"读",Snackbar.LENGTH_LONG).show();
+            readNovel();
         });
         file.setOnClickListener(view -> {
             Snackbar.make(view,"生成文件",Snackbar.LENGTH_LONG).show();
+            getFile();
         });
     }
 
     private void doSth(){
-
-        Intent lastPageDataIntent = getIntent();
-        novelId = ((WritePageItemBean)lastPageDataIntent.getSerializableExtra("data")).getNovelId();
-
-        title.setText(data.get("novel_name"));
-        style.setText(data.get("novel_style"));
-        des.setText(data.get("novel_description"));
+        novelId = data.getNovel_id();
+        title.setText(data.getNovel_name());
+        style.setText(data.getNovel_style());
+        des.setText(data.getNovel_description());
     }
 
     /**
-     * 查库获取数据
-     * @return
+     * 写小说
      */
-    private List<Map<String ,String>> getDataFromSQLite(){
-        String table = DatabaseConstant.NOVEL_INFO_TABLE;
-        Cursor cs = databaseManager.queryAll(table);
-        List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,table);
-        return dataList;
+    private void writeNovel(){
+        Intent wIntent = new Intent();
+        wIntent.putExtra("novel",data);
+        wIntent.setClass(this,WriteNovelActivity.class);
+        startActivity(wIntent);
     }
+
+    /**
+     * 读小说
+     */
+    private void readNovel(){
+
+    }
+
+    /**
+     * 生成文件
+     */
+    private void getFile(){
+
+    }
+
+
 
 }
