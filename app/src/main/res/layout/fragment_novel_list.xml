@@ -4,8 +4,32 @@
     android:layout_height="match_parent"
     tools:context="com.holy.interestingdemo.funnywrite.fragments.NovelListFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:visibility="gone"
+        android:id="@+id/novel_detail_list_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/novel_detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/novel_detail_default"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+
+       >
+        <Button
+            android:id="@+id/novel_detail_add_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加一个novel"/>
+
+    </LinearLayout>
 
 </FrameLayout>

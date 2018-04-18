@@ -30,5 +30,5 @@ public class DatabaseConstant {
             "novel_id int," +
             "novel_session varchar(255)," +
             "novel_page varchar(255)," +
-            "novel_context text(255))";
+            "novel_context varchar(255))";
 }

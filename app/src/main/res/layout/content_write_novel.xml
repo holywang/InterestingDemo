@@ -8,9 +8,10 @@
     tools:context="com.holy.interestingdemo.funnywrite.WriteNovelActivity"
     tools:showIn="@layout/activity_write_novel">
 
-    <View
+    <LinearLayout
         android:id="@+id/write_novel_under_part"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
 </android.support.v4.widget.NestedScrollView>

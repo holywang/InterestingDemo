@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 public abstract class INovels implements Serializable{
 
-    public String novel_id;
-    public String novel_name;
-    public String novel_author;
-    public String novel_style;
-    public String novel_description;
-    public String novel_image;
+    private String novel_id;
+    private String novel_name;
+    private String novel_author;
+    private String novel_style;
+    private String novel_description;
+    private String novel_image;
 
     public String getNovel_id() {
         return novel_id;
