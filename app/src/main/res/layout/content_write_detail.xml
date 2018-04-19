@@ -42,4 +42,10 @@
         android:layout_height="@dimen/common_height"
         android:text="生成文件"/>
 
+    <Button
+        android:id="@+id/write_detail_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_height"
+        android:text="生成统计"/>
+
 </LinearLayout>

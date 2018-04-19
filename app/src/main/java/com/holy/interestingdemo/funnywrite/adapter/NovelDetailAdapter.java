@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.designpattern.factorypattern.base.INovelDetail;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
+import com.holy.interestingdemo.utils.L;
 
 import java.util.List;
 
@@ -40,15 +41,23 @@ public class NovelDetailAdapter extends RecyclerView.Adapter<NovelDetailHolder> 
 
     @Override
     public void onBindViewHolder(NovelDetailHolder holder, int position) {
-        holder.titleImage.setImageResource(R.mipmap.ic_launcher_round);
-        holder.session.setText(list.get(position).getSession());
-        holder.page.setText(list.get(position).getPage());
-        holder.itemView.setOnClickListener(view -> listener.onItemClick(view,position,list.get(position)));
+        if (position < list.size()) {
+            holder.titleImage.setImageResource(R.mipmap.ic_launcher_round);
+            holder.session.setText(list.get(position).getSession());
+            holder.page.setText(list.get(position).getPage());
+            holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, list.get(position)));
+        }else{
+            holder.titleImage.setVisibility(View.GONE);
+            holder.session.setText("添加一个新的章节");
+            holder.page.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, null));
+        }
+        L.i("NDA","this is position"+position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.size()+1;
     }
 
 
@@ -61,7 +70,7 @@ class NovelDetailHolder extends RecyclerView.ViewHolder {
 
     public NovelDetailHolder(View itemView) {
         super(itemView);
-        this.itemView= itemView;
+        this.itemView = itemView;
         titleImage = itemView.findViewById(R.id.write_list_item_head);
         session = itemView.findViewById(R.id.write_list_item_number);
         page = itemView.findViewById(R.id.write_list_item_book_name);

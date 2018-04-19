@@ -24,7 +24,7 @@ public class WriteDetailActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private Toolbar toolbar;
-    private Button write,read,file;
+    private Button write,read,file,statistics;
     private TextView title,style,des;
 
     private DatabaseManager databaseManager;
@@ -50,6 +50,7 @@ public class WriteDetailActivity extends AppCompatActivity {
         write = findViewById(R.id.write_detail_write);
         read = findViewById(R.id.write_detail_read);
         file = findViewById(R.id.write_detail_file);
+        statistics = findViewById(R.id.write_detail_statistics);
 
         title = findViewById(R.id.write_detail_title);
         style = findViewById(R.id.write_detail_style);
@@ -82,13 +83,14 @@ public class WriteDetailActivity extends AppCompatActivity {
             Snackbar.make(view,"生成文件",Snackbar.LENGTH_LONG).show();
             getFile();
         });
+        statistics.setOnClickListener(view -> getStatistics());
     }
 
     private void doSth(){
-        novelId = data.getNovel_id();
-        title.setText(data.getNovel_name());
-        style.setText(data.getNovel_style());
-        des.setText(data.getNovel_description());
+        novelId = data.getNovelId();
+        title.setText(data.getNovelName());
+        style.setText(data.getNovelStyle());
+        des.setText(data.getNovelDescription());
     }
 
     /**
@@ -113,6 +115,16 @@ public class WriteDetailActivity extends AppCompatActivity {
      */
     private void getFile(){
 
+    }
+
+    /**
+     * 生成统计
+     */
+    private void getStatistics(){
+        Intent wIntent = new Intent();
+        wIntent.putExtra("novel",data);
+        wIntent.setClass(this,WriteStatisticsActivity.class);
+        startActivity(wIntent);
     }
 
 

@@ -1,12 +1,13 @@
 package com.holy.interestingdemo.designpattern.factorypattern.base;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * Created by DR on 2018/4/17.
  */
 
-public class INovelDetail {
+public class INovelDetail implements Serializable{
 
     private String novel_id;
     private String session;

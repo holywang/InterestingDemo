@@ -1,14 +1,19 @@
 package com.holy.interestingdemo.funnywrite;
 
-import android.app.FragmentTransaction;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.designpattern.factorypattern.base.INovels;
+import com.holy.interestingdemo.funnywrite.event.NovelListFragmentEvent;
 import com.holy.interestingdemo.funnywrite.fragments.NovelListFragment;
+import com.holy.interestingdemo.funnywrite.fragments.NovelWriteFragment;
 import com.holy.interestingdemo.mainInfo.BaseActivity;
+import com.holy.interestingdemo.utils.L;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class WriteNovelActivity extends BaseActivity {
 
@@ -16,15 +21,17 @@ public class WriteNovelActivity extends BaseActivity {
 
     private FloatingActionButton fab;
     private Toolbar toolbar;
-    private FragmentTransaction transaction;
 
     private NovelListFragment novelListFragment;
+    private NovelWriteFragment novelWriteFragment;
 
     private INovels data;
+    private boolean flag;
 
     @Override
     public void toSetContentView() {
         setContentView(R.layout.activity_write_novel);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -44,16 +51,68 @@ public class WriteNovelActivity extends BaseActivity {
     @Override
     public void doSth() {
         data = (INovels) getIntent().getSerializableExtra("novel");
-        toolbar.setTitle(data.getNovel_name());
+        toolbar.setTitle(data.getNovelName());
         setSupportActionBar(toolbar);
         setFragment();
     }
 
     private void setFragment() {
-        transaction = getFragmentManager().beginTransaction();
         novelListFragment = NovelListFragment.newInstance(data);
-        transaction.add(R.id.write_novel_under_part, novelListFragment, "first").commit();
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.write_novel_under_part, novelListFragment, "first")
+                .commit();
     }
 
+    @Subscribe(sticky = true)
+    public void onMessageEvent(NovelListFragmentEvent event) {
+        L.i(TAG, event.getAction());
+        switch (event.getAction()) {
+            case "add":
+                flag = true;
+                novelWriteFragment = NovelWriteFragment.newInstance(data.getNovelId(), "add");
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.write_novel_under_part, novelWriteFragment, "add")
+                        .commit();
+                break;
+            case "read":
+                flag = true;
+                novelWriteFragment = NovelWriteFragment.newInstance(event.getData(), "read");
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.write_novel_under_part, novelWriteFragment, "read")
+                        .commit();
+                break;
+            case "update":
+                flag = true;
+                novelWriteFragment = NovelWriteFragment.newInstance(event.getData(), "update");
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.write_novel_under_part, novelWriteFragment, "update")
+                        .commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (flag) {
+            flag = false;
+            novelListFragment = NovelListFragment.newInstance(data);
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.write_novel_under_part, novelListFragment, "first")
+                    .commit();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
 }

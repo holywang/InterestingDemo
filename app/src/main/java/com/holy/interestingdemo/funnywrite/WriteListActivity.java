@@ -98,12 +98,12 @@ public class WriteListActivity extends AppCompatActivity {
         List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,"NovelInfo");
         for (int i = 0; i < dataList.size(); i++) {
             INovels novel = NovelFactory.getNovelByType(this,dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
-            novel.setNovel_id(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));
-            novel.setNovel_name(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[1]));
-            novel.setNovel_author(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[2]));
-            novel.setNovel_style(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
-            novel.setNovel_description(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[4]));
-            novel.setNovel_image(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[5]));
+            novel.setNovelId(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));
+            novel.setNovelName(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[1]));
+            novel.setNovelAuthor(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[2]));
+            novel.setNovelStyle(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
+            novel.setNovelDescription(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[4]));
+            novel.setNovelImage(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[5]));
             list.add(novel);
         }
         return list;

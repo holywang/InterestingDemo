@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="NovelInputText">
-        <attr name="infoHint" format="string" />
-        <attr name="infoHintColor" format="reference|color" />
-        <attr name="infoTextColor" format="reference|color" />
-        <attr name="infoTextSize" format="dimension" />
-        <attr name="infoRowSpacing" format="dimension" />
-        <attr name="underLine" format="reference|color" />
-    </declare-styleable>
+
 </resources>

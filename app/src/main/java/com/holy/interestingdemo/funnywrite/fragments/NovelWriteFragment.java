@@ -10,25 +10,37 @@ import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.designpattern.factorypattern.base.INovelDetail;
 import com.holy.interestingdemo.mainInfo.BaseFragment;
 import com.holy.interestingdemo.utils.L;
-import com.holy.interestingdemo.views.NovelInputText;
 
 
 public class NovelWriteFragment extends BaseFragment {
 
     public static final String TAG = "NovelWriteFragment";
 
-    private NovelInputText novelInput;
-
+    private String novelId;
+    private INovelDetail novelDetail;
+    private String action;
 
     public NovelWriteFragment() {
         // Required empty public constructor
     }
 
 
-    public static NovelWriteFragment newInstance(INovelDetail novelDetail, String param2) {
+    public static NovelWriteFragment newInstance(INovelDetail novelDetail, String action) {
         NovelWriteFragment fragment = new NovelWriteFragment();
         Bundle args = new Bundle();
+        args.putSerializable("data", novelDetail);
+        args.putString("action", action);
+        args.putString("id", null);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
+    public static NovelWriteFragment newInstance(String novelId, String action) {
+        NovelWriteFragment fragment = new NovelWriteFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("data", null);
+        args.putString("id", novelId);
+        args.putString("action", action);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +49,9 @@ public class NovelWriteFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            novelDetail = (INovelDetail) getArguments().getSerializable("data");
+            novelId = getArguments().getString("id");
+            action = getArguments().getString("action");
         }
     }
 
@@ -49,7 +63,7 @@ public class NovelWriteFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
-        novelInput = view.findViewById(R.id.novel_input);
+
     }
 
     @Override
@@ -59,7 +73,7 @@ public class NovelWriteFragment extends BaseFragment {
 
     @Override
     public void doSth() {
-        L.i(TAG,novelInput.getInputText());
+
     }
 
 

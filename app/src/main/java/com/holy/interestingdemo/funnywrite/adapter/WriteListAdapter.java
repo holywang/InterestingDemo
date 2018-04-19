@@ -43,8 +43,8 @@ public class WriteListAdapter extends RecyclerView.Adapter<WriteListHolder> {
     public void onBindViewHolder(WriteListHolder holder, int position) {
 
 //        holder.head.setImageURI();
-        holder.bookName.setText(list.get(position).getNovel_name());
-        holder.number.setText(list.get(position).getNovel_style());
+        holder.bookName.setText(list.get(position).getNovelName());
+        holder.number.setText(list.get(position).getNovelStyle());
         holder.itemView.setOnClickListener(view -> listener.onItemClick(view,position,list.get(position)));
 
     }
