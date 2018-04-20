@@ -1,5 +1,6 @@
 package com.holy.interestingdemo.funnywrite;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -8,7 +9,7 @@ import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.designpattern.factorypattern.base.INovels;
 import com.holy.interestingdemo.funnywrite.event.NovelListFragmentEvent;
 import com.holy.interestingdemo.funnywrite.fragments.NovelListFragment;
-import com.holy.interestingdemo.funnywrite.fragments.NovelWriteFragment;
+import com.holy.interestingdemo.funnywrite.fragments.NovelShowFragment;
 import com.holy.interestingdemo.mainInfo.BaseActivity;
 import com.holy.interestingdemo.utils.L;
 
@@ -19,11 +20,14 @@ public class WriteNovelActivity extends BaseActivity {
 
     public static final String TAG = "WriteNovelActivity";
 
+    public static final int ADD_REQUEST_CODE = 100001;
+    public static final int UPDATE_REQUEST_CODE = 100002;
+
     private FloatingActionButton fab;
     private Toolbar toolbar;
 
     private NovelListFragment novelListFragment;
-    private NovelWriteFragment novelWriteFragment;
+    private NovelShowFragment novelShowFragment;
 
     private INovels data;
     private boolean flag;
@@ -69,30 +73,27 @@ public class WriteNovelActivity extends BaseActivity {
         L.i(TAG, event.getAction());
         switch (event.getAction()) {
             case "add":
-                flag = true;
-                novelWriteFragment = NovelWriteFragment.newInstance(data.getNovelId(), "add");
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.write_novel_under_part, novelWriteFragment, "add")
-                        .commit();
+                Intent addIntent = new Intent(this, NovelWriteActivity.class);
+                addIntent.putExtra("novel", data);
+                addIntent.putExtra("action", "add");
+                startActivityForResult(addIntent, ADD_REQUEST_CODE);
                 break;
             case "read":
                 flag = true;
-                novelWriteFragment = NovelWriteFragment.newInstance(event.getData(), "read");
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.write_novel_under_part, novelWriteFragment, "read")
-                        .commit();
+                novelShowFragment = NovelShowFragment.newInstance(event.getData().getNovelId(), "read");
                 break;
             case "update":
-                flag = true;
-                novelWriteFragment = NovelWriteFragment.newInstance(event.getData(), "update");
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.write_novel_under_part, novelWriteFragment, "update")
-                        .commit();
+                Intent updateIntent = new Intent(this, NovelWriteActivity.class);
+                updateIntent.putExtra("novel", data);
+                updateIntent.putExtra("action", "update");
+                startActivityForResult(updateIntent, UPDATE_REQUEST_CODE);
                 break;
         }
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.write_novel_under_part, novelShowFragment, "second")
+                .commit();
     }
 
     @Override
@@ -115,4 +116,9 @@ public class WriteNovelActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

@@ -170,7 +170,7 @@ public class NovelListFragment extends BaseFragment {
 
         for (int i = 0; i < 20; i++) {
             INovelDetail item = new INovelDetail();
-            item.setNovel_id("fake");
+            item.setNovelId("fake");
             item.setContext(null);
             item.setPage("王侯将相，宁有种乎");
             item.setSession("" + (i + 1));

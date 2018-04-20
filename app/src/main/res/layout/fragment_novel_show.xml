@@ -1,0 +1,50 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:self="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#abcdefff"
+    tools:context="com.holy.interestingdemo.funnywrite.fragments.NovelShowFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="session number"
+            android:textSize="@dimen/text_margin"
+            android:includeFontPadding="false"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:padding="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="page number and name"
+            android:textSize="@dimen/text_margin"
+            android:includeFontPadding="false"
+            android:textColor="#555555"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/novel_show_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/novel_demo"
+            android:textSize="@dimen/text_margin"
+            android:includeFontPadding="false"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/novel_show_next_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下一章节"/>
+    </LinearLayout>
+
+
+
+</FrameLayout>

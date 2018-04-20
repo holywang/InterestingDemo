@@ -75,7 +75,7 @@ public class PieChart extends View {
 
         for (int i = 0; i < pieList.size(); i++) {
             float f = pieList.get(i).getNum();
-            int radian = getRadian(f);
+            float radian = getRadian(f);
 
             canvas.drawArc(
                     rect,
@@ -108,8 +108,8 @@ public class PieChart extends View {
      * @param input
      * @return
      */
-    private int getRadian(float input) {
-        int i = (int) ((input / getAllValue()) * 360);
+    private float getRadian(float input) {
+        float i =(input / getAllValue()) * 360 ;
         return i;
     }
 

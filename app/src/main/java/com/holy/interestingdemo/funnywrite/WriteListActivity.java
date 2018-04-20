@@ -94,8 +94,8 @@ public class WriteListActivity extends AppCompatActivity {
      */
     private List<INovels> getDataFromSQLite(List<INovels> list){
         String table = DatabaseConstant.NOVEL_INFO_TABLE;
-        Cursor cs = databaseManager.queryAll("NovelInfo");
-        List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,"NovelInfo");
+        Cursor cs = databaseManager.queryAll(table);
+        List<Map<String ,String>> dataList = DatabaseUtils.getList(cs,table);
         for (int i = 0; i < dataList.size(); i++) {
             INovels novel = NovelFactory.getNovelByType(this,dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[3]));
             novel.setNovelId(dataList.get(i).get(DatabaseConstant.NOVEL_INFO_ARRAY[0]));

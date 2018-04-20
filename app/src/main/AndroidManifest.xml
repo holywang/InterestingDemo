@@ -54,7 +54,11 @@
             android:label="@string/title_activity_write_novel"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".mygallery.view.PerfectGalleryActivity" />
-        <activity android:name=".funnywrite.WriteStatisticsActivity"></activity>
+        <activity android:name=".funnywrite.WriteStatisticsActivity" />
+        <activity
+            android:name=".funnywrite.NovelWriteActivity"
+            android:label="@string/title_activity_novel_write"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

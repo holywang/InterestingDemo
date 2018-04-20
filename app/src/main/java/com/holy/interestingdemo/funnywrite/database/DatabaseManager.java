@@ -57,6 +57,18 @@ public class DatabaseManager {
     }
 
     /**
+     *查询 where_what 是 where_args_what 的所有数据
+     * @param table 表名
+     * @param where_what 参数名
+     * @param where_args_what 参数值 的 数组
+     * @return 结果Cursor
+     */
+    public Cursor queryById(String table,String where_what,String[] where_args_what){
+        Cursor cs = database.query(table,new String[]{"*"},where_what,where_args_what,null,null,null);
+        return cs;
+    }
+
+    /**
      * 删除方法
      * @param table 表名
      * @param where 索引字段
