@@ -144,24 +144,29 @@ public class NovelListFragment extends BaseFragment {
 
         List<INovelDetail> list = new ArrayList<>();
 
-//        DatabaseManager manager = new DatabaseManager(getActivity());
-//        List<Map<String, String>> dataList = DatabaseUtils.getList(
-//                manager.queryAll(DatabaseConstant.NOVEL_CONTEXT_TABLE),
-//                DatabaseConstant.NOVEL_CONTEXT_TABLE);
-//
-//        for (Map<String, String> map : dataList) {
-//            if (novelId.equals(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[0]))) {
-//                INovelDetail novelDetail = new INovelDetail();
-//                novelDetail.setNovel_id(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[0]));
-//                novelDetail.setSession(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[1]));
-//                novelDetail.setPage(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[2]));
-//                novelDetail.setContext(new File(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[3])));
-//                list.add(novelDetail);
-//            }
-//        }
-//
-//        return list;
-        return getFakeData();
+        DatabaseManager manager = new DatabaseManager(getActivity());
+        List<Map<String, String>> dataList = DatabaseUtils.getList(
+                manager.queryAll(DatabaseConstant.NOVEL_CONTEXT_TABLE),
+                DatabaseConstant.NOVEL_CONTEXT_TABLE);
+
+        for (Map<String, String> map : dataList) {
+            if (novelId.equals(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[0]))) {
+                INovelDetail novelDetail = new INovelDetail();
+                novelDetail.setNovelId(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[0]));
+                novelDetail.setDetailId(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[1]));
+                novelDetail.setSession(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[2]));
+                novelDetail.setPage(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[3]));
+                novelDetail.setContext(map.get(DatabaseConstant.NOVEL_CONTEXT_ARRAY[4]));
+                list.add(novelDetail);
+            }
+        }
+
+        INovelDetail lastDetail = new INovelDetail();
+        list.add(lastDetail);
+
+
+        return list;
+//        return getFakeData();
     }
 
     public List<INovelDetail> getFakeData() {
@@ -185,7 +190,9 @@ public class NovelListFragment extends BaseFragment {
      * 新建一个NovelDetail
      */
     private void addNewNovelDetail() {
-        EventBus.getDefault().postSticky(new NovelListFragmentEvent("add"));
+        NovelListFragmentEvent addEvent = new NovelListFragmentEvent("add");
+        addEvent.setIfNone(novelDetailList.size() == 1);
+        EventBus.getDefault().postSticky(addEvent);
     }
 
     private void toReadNovelDetail(INovelDetail data) {

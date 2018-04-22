@@ -10,6 +10,7 @@ import com.holy.interestingdemo.designpattern.factorypattern.base.INovelDetail;
 public class NovelListFragmentEvent {
     private String action;
     private INovelDetail data;
+    private boolean ifNone;
 
     public NovelListFragmentEvent(String action){
         this.action = action;
@@ -29,5 +30,13 @@ public class NovelListFragmentEvent {
 
     public void setData(INovelDetail data) {
         this.data = data;
+    }
+
+    public boolean isIfNone() {
+        return ifNone;
+    }
+
+    public void setIfNone(boolean ifNone) {
+        this.ifNone = ifNone;
     }
 }

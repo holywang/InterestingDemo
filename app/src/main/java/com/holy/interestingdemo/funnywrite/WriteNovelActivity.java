@@ -20,8 +20,8 @@ public class WriteNovelActivity extends BaseActivity {
 
     public static final String TAG = "WriteNovelActivity";
 
-    public static final int ADD_REQUEST_CODE = 100001;
-    public static final int UPDATE_REQUEST_CODE = 100002;
+    public static final int ADD_REQUEST_CODE = 101;
+    public static final int UPDATE_REQUEST_CODE = 102;
 
     private FloatingActionButton fab;
     private Toolbar toolbar;
@@ -76,11 +76,16 @@ public class WriteNovelActivity extends BaseActivity {
                 Intent addIntent = new Intent(this, NovelWriteActivity.class);
                 addIntent.putExtra("novel", data);
                 addIntent.putExtra("action", "add");
+                addIntent.putExtra("ifNone",event.isIfNone());
                 startActivityForResult(addIntent, ADD_REQUEST_CODE);
                 break;
             case "read":
                 flag = true;
                 novelShowFragment = NovelShowFragment.newInstance(event.getData().getNovelId(), "read");
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.write_novel_under_part, novelShowFragment, "second")
+                        .commit();
                 break;
             case "update":
                 Intent updateIntent = new Intent(this, NovelWriteActivity.class);
@@ -90,10 +95,7 @@ public class WriteNovelActivity extends BaseActivity {
                 break;
         }
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.write_novel_under_part, novelShowFragment, "second")
-                .commit();
+
     }
 
     @Override
@@ -119,6 +121,8 @@ public class WriteNovelActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
 
     }
 }

@@ -41,23 +41,24 @@ public class NovelDetailAdapter extends RecyclerView.Adapter<NovelDetailHolder> 
 
     @Override
     public void onBindViewHolder(NovelDetailHolder holder, int position) {
-        if (position < list.size()) {
-            holder.titleImage.setImageResource(R.mipmap.ic_launcher_round);
-            holder.session.setText(list.get(position).getSession());
-            holder.page.setText(list.get(position).getPage());
-            holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, list.get(position)));
-        }else{
+        if (position == list.size()-1) {
             holder.titleImage.setVisibility(View.GONE);
             holder.session.setText("添加一个新的章节");
             holder.page.setVisibility(View.GONE);
             holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, null));
+        }else{
+            holder.titleImage.setImageResource(R.mipmap.ic_launcher_round);
+            holder.session.setText(list.get(position).getSession());
+            holder.page.setText(list.get(position).getPage());
+            holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, list.get(position)));
+
         }
         L.i("NDA","this is position"+position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size();
     }
 
 

@@ -2,7 +2,6 @@ package com.holy.interestingdemo.funnywrite;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -42,9 +41,10 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
 
     private INovels novel;
     private INovelDetail currentDetail;
-    private List<INovelDetail> novelContextList;
+    private List<INovelDetail> novelContextList = new ArrayList<>();
     private int contextNum;
     private String action;
+    private boolean ifNone;
 
     private String session, page, context;
 
@@ -81,12 +81,15 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
 
         novel = (INovels) data.getSerializableExtra("novel");
         action = data.getStringExtra("action");
-        novelContextList = getData();
-        if (novelContextList.size() != 0) {
-            currentDetail = novelContextList.get(novelContextList.size() - 1);
+        ifNone = data.getBooleanExtra("ifNone",false);
+        if(!ifNone){
+            novelContextList = getData();
+            if (novelContextList.size() != 0) {
+                currentDetail = novelContextList.get(novelContextList.size() - 1);
+            }
         }
         if (action.equals("update")) {
-            fotUpdate();
+            forUpdate();
             return;
         }
         if (action.equals("add")) {
@@ -117,7 +120,7 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
     /**
      * 修改
      */
-    private void fotUpdate() {
+    private void forUpdate() {
         showSession.setText("第" + currentDetail.getSession() + "章");
         pageInput.setText(currentDetail.getPage());
 
