@@ -36,12 +36,6 @@
         <activity android:name=".funnyplayer.PlayerListActivity" />
         <activity android:name=".funnyplayer.VideoPlayActivity" />
         <activity android:name=".webview.WebViewActivity" />
-
-        <service
-            android:name=".mp3player.service.MyMediaService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".mp3player.MusicPlayerActivity"
             android:configChanges="orientation|screenSize" />
@@ -58,7 +52,13 @@
         <activity
             android:name=".funnywrite.NovelWriteActivity"
             android:label="@string/title_activity_novel_write"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <service
+            android:name=".mp3player.service.MyMediaService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

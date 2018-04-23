@@ -1,6 +1,7 @@
 package com.holy.interestingdemo.funnywrite;
 
 import android.graphics.Color;
+import android.view.View;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.mainInfo.BaseActivity;
@@ -36,5 +37,10 @@ public class WriteStatisticsActivity extends BaseActivity {
                 .add(31.2f, Color.YELLOW, "黄色部分")
                 .add(29.7f, Color.GRAY, "灰色部分");
         L.i(TAG,"add finish");
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

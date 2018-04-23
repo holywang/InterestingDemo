@@ -16,10 +16,11 @@ public class DataModel implements IDataModel {
     @Override
     public void getData(int number, int page, IDataCallback callback) {
 
-        NetUtil.connectWithGankIO().getFuliInfo(2,2).enqueue(new Callback<FuliBean>() {
+        NetUtil.connectWithGankIO().getFuliInfo(number,page).enqueue(new Callback<FuliBean>() {
             @Override
             public void onResponse(Call<FuliBean> call, Response<FuliBean> response) {
                callback.returnData(FuliBean.class,response.body());
+
             }
 
             @Override

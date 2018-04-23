@@ -14,6 +14,7 @@ import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 import com.holy.interestingdemo.mp3player.MusicPlayerActivity;
+import com.holy.interestingdemo.mygallery.view.PerfectGalleryActivity;
 import com.holy.interestingdemo.webview.WebViewActivity;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         list.add("WebView允许上传文件");
         list.add("多线程MUSIC播放器");
         list.add("EventBus的Demo");
+        list.add("关于Fresco的列表");
 
         MainPageAdapter adapter = new MainPageAdapter(this, list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4:
                         it.setClass(MainActivity.this, EventBusActivity.class);
+                        break;
+                    case 5:
+                        it.setClass(MainActivity.this, PerfectGalleryActivity.class);
                         break;
                 }
                 startActivity(it);

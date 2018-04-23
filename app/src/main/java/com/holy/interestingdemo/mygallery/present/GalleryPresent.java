@@ -26,6 +26,7 @@ public class GalleryPresent {
             public <T> T returnData(Class<T> clz, T t) {
                 if(t instanceof FuliBean){
                     shower.setImageFile(((FuliBean) t).getResults());
+
                 }
                 return null;
             }

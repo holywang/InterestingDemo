@@ -2,6 +2,7 @@ package com.holy.interestingdemo.mainInfo;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.holy.interestingdemo.utils.L;
 
 /**
@@ -15,10 +16,9 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Fresco.initialize(this);
         int pid = android.os.Process.myPid();
-
-        L.i(APP_TAG,"on create progress ID = "+pid);
+        L.i(APP_TAG, "on create progress ID = " + pid);
 
     }
 }
