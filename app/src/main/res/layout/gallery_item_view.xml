@@ -19,7 +19,6 @@
         fresco:placeholderImage="@mipmap/placeholder"
         android:scaleType="centerCrop"
         fresco:roundedCornerRadius="20dp"
-
         />
 
 </RelativeLayout>
