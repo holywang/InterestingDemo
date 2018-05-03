@@ -20,18 +20,39 @@ public class GalleryPresent {
         this.shower = shower;
     }
 
+    /**
+     * 设置图片列表
+     * @param number
+     * @param page
+     */
     public void setImageList(int number,int page){
         dataModel.getData(number, page, new IDataCallback() {
             @Override
             public <T> T returnData(Class<T> clz, T t) {
                 if(t instanceof FuliBean){
                     shower.setImageFile(((FuliBean) t).getResults());
-
                 }
                 return null;
             }
         });
 
+    }
+
+    /**
+     * 加载更多图片
+     * @param number
+     * @param page
+     */
+    public void addMoreImage(int number,int page){
+        dataModel.getData(number, page, new IDataCallback() {
+            @Override
+            public <T> T returnData(Class<T> clz, T t) {
+                if(t instanceof FuliBean){
+                    shower.setImageFile(((FuliBean) t).getResults());
+                }
+                return null;
+            }
+        });
     }
 
 

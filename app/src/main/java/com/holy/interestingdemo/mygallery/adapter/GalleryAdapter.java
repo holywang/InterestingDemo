@@ -62,6 +62,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
     public int getItemCount() {
         return list.size();
     }
+
+    /**
+     * 加载更多
+     * @param moreList
+     */
+    public void addList(List<FuliBean.ResultsBean> moreList){
+        list.addAll(moreList);
+        notifyDataSetChanged();
+    }
 }
 
 class GalleryHolder extends RecyclerView.ViewHolder {

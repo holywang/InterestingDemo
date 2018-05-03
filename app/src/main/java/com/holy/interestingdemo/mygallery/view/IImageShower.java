@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface IImageShower {
     void setImageFile(List<FuliBean.ResultsBean> list);
+    void addMoreImage(List<FuliBean.ResultsBean> list);
 }

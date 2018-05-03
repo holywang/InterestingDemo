@@ -1,3 +1,7 @@
+/**
+ * created by holywang 2018/04
+ * 统计页面
+ */
 package com.holy.interestingdemo.funnywrite;
 
 import android.graphics.Color;

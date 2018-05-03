@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnywrite.database.DatabaseConstant;
@@ -63,8 +64,8 @@ public class WriteAddActivity extends Activity {
                 Snackbar.make(view,"添加失败请重新添加",Snackbar.LENGTH_LONG).show();
                 return;
             }
-            Snackbar.make(view,"添加成功",Snackbar.LENGTH_LONG).show();
-
+            Toast.makeText(this, "添加成功", Toast.LENGTH_LONG).show();
+            finish();
         });
 
         style.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

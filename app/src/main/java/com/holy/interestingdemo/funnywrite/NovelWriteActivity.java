@@ -1,7 +1,12 @@
 package com.holy.interestingdemo.funnywrite;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +31,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogRecord;
 
 public class NovelWriteActivity extends BaseActivity implements View.OnClickListener {
 
@@ -45,6 +51,7 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
     private int contextNum;
     private String action;
     private boolean ifNone;
+    private Handler UIHandler;
 
     private String session, page, context;
 
@@ -74,6 +81,7 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
         addSessionBtn.setOnClickListener(this);
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void doSth() {
         toolbar.setTitle("新章节编辑");
@@ -100,6 +108,14 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
             }
         }
 
+        UIHandler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+            }
+        };
 
     }
 
@@ -279,6 +295,7 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
     class WriteFileThread implements Runnable {
 
         private File file;
+        private Handler wfHandler;
 
         WriteFileThread(File file) {
             this.file = file;
@@ -286,6 +303,7 @@ public class NovelWriteActivity extends BaseActivity implements View.OnClickList
 
         @Override
         public void run() {
+
 
         }
     }
