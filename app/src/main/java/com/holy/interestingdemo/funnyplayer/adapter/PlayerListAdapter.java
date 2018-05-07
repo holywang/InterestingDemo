@@ -33,6 +33,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListHolder> {
         this.listener = listener;
     }
 
+
     @Override
     public PlayerListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_list_item, parent, false);
@@ -42,6 +43,10 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListHolder> {
     @Override
     public void onBindViewHolder(PlayerListHolder holder, int position) {
         holder.itemView.setOnClickListener(view -> listener.onItemClick(view, position, list.get(position)));
+        holder.itemView.setOnLongClickListener(view ->{
+            listener.onItemLongClick(view, position, list.get(position));
+            return true;
+        });
         holder.fileName.setText(list.get(position).getName());
         holder.fileSize.setText(MediaUtil.changeToMB(list.get(position).length())+"MB");
     }

@@ -2,6 +2,7 @@ package com.holy.interestingdemo.funnyplayer.presenter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import com.holy.interestingdemo.funnyplayer.model.IPlayerListModel;
 import com.holy.interestingdemo.funnyplayer.model.PlayerListModelImpl;
@@ -76,4 +77,8 @@ public class PlayerListPresenter extends BasePresenter {
         return ((PlayerListModelImpl) iPlayerListModel).getMediaList();
     }
 
+    @Override
+    public boolean showLoading(ViewGroup rootView) {
+        return false;
+    }
 }

@@ -1,7 +1,10 @@
 package com.holy.interestingdemo.funnyplayer.model;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.MediaStore;
 
+import com.holy.interestingdemo.funnyplayer.model.bean.PlayerBean;
 import com.holy.interestingdemo.utils.L;
 import com.holy.interestingdemo.utils.MediaUtil;
 
@@ -82,4 +85,13 @@ public class PlayerListModelImpl implements IPlayerListModel{
         }
         return mp3List;
     }
+
+    @Override
+    public List<PlayerBean> getPlayerList(Context context) {
+        List<PlayerBean> list = MediaUtil.getVideoToPlayerBean(context);
+
+        return list;
+    }
+
+
 }

@@ -13,4 +13,9 @@ public class RecyclerViewOnItemClickListener implements RecyclerViewOnItemClick{
     public void onItemClick(View view, int position, Object data) {
         throw new RuntimeException("Stub!");
     }
+
+    @Override
+    public void onItemLongClick(View view, int position, Object data) {
+        throw new RuntimeException("Stub!");
+    }
 }

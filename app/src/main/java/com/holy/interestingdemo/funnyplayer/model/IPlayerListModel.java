@@ -2,6 +2,8 @@ package com.holy.interestingdemo.funnyplayer.model;
 
 import android.content.Context;
 
+import com.holy.interestingdemo.funnyplayer.model.bean.PlayerBean;
+
 import java.io.File;
 import java.util.List;
 
@@ -24,5 +26,13 @@ public interface IPlayerListModel {
      * @return
      */
     List<File> getMp3List(Context context);
+
+
+    /**
+     * 获取一个媒体文件的PlayerBean的列表
+     * @param context
+     * @return
+     */
+    List<PlayerBean> getPlayerList(Context context);
 
 }

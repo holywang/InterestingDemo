@@ -1,8 +1,13 @@
 package com.holy.interestingdemo.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
+
+import com.holy.interestingdemo.funnyplayer.model.bean.PlayerBean;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,6 +67,35 @@ public class MediaUtil {
     }
 
     /**
+     * 获取一个媒体文件的PlayerBean的列表
+     * @param context
+     * @return
+     */
+    public static List<PlayerBean> getVideoToPlayerBean(Context context){
+        List<PlayerBean> list = new ArrayList<>();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Video.Media._ID, MediaStore.Video.Media.DISPLAY_NAME, MediaStore.Video.Media.TITLE,
+                        MediaStore.Video.Media.DURATION,MediaStore.Video.Media.MIME_TYPE, MediaStore.Video.Media.SIZE,
+                        MediaStore.Video.Media.DATA }, null, new String[] {}, null);
+        cursor.moveToFirst();
+
+        do{
+            PlayerBean pb = new PlayerBean();
+            pb.setId(cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media._ID)));
+            pb.setName(cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME)));
+            pb.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE)));
+            pb.setSize(cursor.getFloat(cursor.getColumnIndex(MediaStore.Video.Media.SIZE)));
+            pb.setType(cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.MIME_TYPE)));
+            pb.setUrl(cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA)));
+            pb.setDuration(cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION)));
+            list.add(pb);
+        } while (cursor.moveToNext());
+
+        return list;
+    }
+
+    /**
      * 字节切换成MB
      * @param inputByte
      * @return
@@ -69,5 +103,16 @@ public class MediaUtil {
     public static float changeToMB(long inputByte){
         float output = (inputByte / 1000)/1024;
         return (float)(Math.round(output*100))/100;
+    }
+
+    /**
+     * 通过ID获取视频缩略图
+     * @param id
+     * @return
+     */
+    public static Bitmap getMiniPicById(Long id,Context context){
+        ContentResolver cr = context.getContentResolver();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        return MediaStore.Video.Thumbnails.getThumbnail(cr, id, MediaStore.Video.Thumbnails.MINI_KIND, options);
     }
 }

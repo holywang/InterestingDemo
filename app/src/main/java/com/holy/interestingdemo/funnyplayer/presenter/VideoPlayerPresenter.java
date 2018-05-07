@@ -2,6 +2,7 @@ package com.holy.interestingdemo.funnyplayer.presenter;
 
 
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.holy.interestingdemo.funnyplayer.model.IPlayerListModel;
 import com.holy.interestingdemo.funnyplayer.model.IVideoPlayModel;
@@ -103,5 +104,10 @@ public class VideoPlayerPresenter extends BasePresenter {
                         .getAbsolutePath()
         );
         startNewVideo();
+    }
+
+    @Override
+    public boolean showLoading(ViewGroup rootView) {
+        return false;
     }
 }

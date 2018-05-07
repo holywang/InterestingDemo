@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnyplayer.presenter.VideoPlayerPresenter;
 import com.holy.interestingdemo.funnyplayer.view.IVideoPlay;
+import com.holy.interestingdemo.mainInfo.BaseActivity;
 import com.holy.interestingdemo.mainInfo.MainApplication;
 import com.holy.interestingdemo.utils.L;
 import com.holy.interestingdemo.utils.TimeUtil;
@@ -24,7 +25,7 @@ import com.holy.interestingdemo.utils.TimeUtil;
 import java.io.File;
 import java.io.IOException;
 
-public class VideoPlayActivity extends PlayerBaseActivity
+public class VideoPlayActivity extends BaseActivity
         implements
         TextureView.SurfaceTextureListener,
         MediaPlayer.OnPreparedListener,
@@ -54,20 +55,8 @@ public class VideoPlayActivity extends PlayerBaseActivity
     private int pauseProgress = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void toSetContentView() {
         setContentView(R.layout.activity_video_play);
-        setDefaultSetting();
-        initView();
-        setListener();
-        videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
-        videoPlayerPresenter.setCurrentPosition(dataIntent.getIntExtra("position", 0));
-        if (playerTextureView.isAvailable()) {
-            videoPlayerPresenter.startNewVideo();
-        }
-    }
-
-    private void setDefaultSetting() {
         dataIntent = getIntent();
         getWindow()
                 .getDecorView()
@@ -81,7 +70,8 @@ public class VideoPlayActivity extends PlayerBaseActivity
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    private void initView() {
+    @Override
+    public void initViews() {
         backBtn = findViewById(R.id.video_player_back);
         playerTextureView = findViewById(R.id.player_texture_view);
         lastBtn = findViewById(R.id.video_player_last);
@@ -92,7 +82,11 @@ public class VideoPlayActivity extends PlayerBaseActivity
         currentText = findViewById(R.id.video_player_current);
     }
 
-    private void setListener() {
+
+
+
+    @Override
+    public void setListener() {
         backBtn.setOnClickListener(view -> finish());
         playerTextureView.setSurfaceTextureListener(this);
         videoProgress.setOnSeekBarChangeListener(this);
@@ -107,6 +101,15 @@ public class VideoPlayActivity extends PlayerBaseActivity
         });
 
 
+    }
+
+    @Override
+    public void doSth() {
+        videoPlayerPresenter = new VideoPlayerPresenter(this, dataIntent.getStringExtra("url"));
+        videoPlayerPresenter.setCurrentPosition(dataIntent.getIntExtra("position", 0));
+        if (playerTextureView.isAvailable()) {
+            videoPlayerPresenter.startNewVideo();
+        }
     }
 
     @Override
@@ -261,6 +264,11 @@ public class VideoPlayActivity extends PlayerBaseActivity
             mediaPlayer.seekTo(seekBar.getProgress());
             mediaPlayer.start();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
 

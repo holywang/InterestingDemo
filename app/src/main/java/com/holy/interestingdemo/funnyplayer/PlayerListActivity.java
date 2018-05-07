@@ -12,13 +12,15 @@ import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.funnyplayer.adapter.PlayerListAdapter;
 import com.holy.interestingdemo.funnyplayer.presenter.PlayerListPresenter;
 import com.holy.interestingdemo.funnyplayer.view.IPlayerView;
+import com.holy.interestingdemo.mainInfo.BaseActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 import com.holy.interestingdemo.utils.L;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
-public class PlayerListActivity extends PlayerBaseActivity implements IPlayerView {
+public class PlayerListActivity extends BaseActivity implements IPlayerView {
 
     private final static String TAG = "PlayerListActivity";
 
@@ -30,26 +32,25 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
     private PlayerListAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void toSetContentView() {
         setContentView(R.layout.activity_player);
-        L.i(TAG, "onCreate");
-        initView();
-        addAction();
-
     }
 
-    public void initView() {
-        L.i(TAG, "initView");
+    @Override
+    public void initViews() {
         playerList = findViewById(R.id.player_list);
         playerRefreshView = findViewById(R.id.player_list_refresh);
     }
 
-
-    public void addAction() {
-        L.i(TAG, "addAction");
+    @Override
+    public void setListener() {
         presenter = new PlayerListPresenter(this);
         presenter.setList(presenter.getMp4FileList(this));
+
+    }
+
+    @Override
+    public void doSth() {
         setListView();
     }
 
@@ -67,7 +68,16 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
                 it.putExtra("position",position);
                 startActivity(it);
             }
+
+            @Override
+            public void onItemLongClick(View view, int position, Object data) {
+                Intent it = new Intent();
+                it.setClass(PlayerListActivity.this,ListVideoPlayActivity.class);
+                it.putExtra("position",position);
+                startActivity(it);
+            }
         });
+
         playerRefreshView.setColorSchemeResources(
                 R.color.colorAccent,R.color.colorPrimary
         );
@@ -106,6 +116,11 @@ public class PlayerListActivity extends PlayerBaseActivity implements IPlayerVie
 
     @Override
     public void dissmissWaitingDialog() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

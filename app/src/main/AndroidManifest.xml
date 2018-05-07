@@ -54,11 +54,12 @@
             android:label="@string/title_activity_novel_write"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <service
             android:name=".mp3player.service.MyMediaService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".funnyplayer.ListVideoPlayActivity"></activity>
     </application>
 
 </manifest>
