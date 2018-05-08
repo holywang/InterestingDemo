@@ -2,9 +2,9 @@ package com.holy.interestingdemo.network;
 
 import com.holy.interestingdemo.network.bean.FuliBean;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * Created by Administrator on 2018/3/20.
@@ -20,7 +20,7 @@ public interface RetrofitInterface {
      * @return
      */
     @GET("api/data/福利/{number}/{page}")
-    Call<FuliBean> getFuliInfo(@Path("number")int number,@Path("page")int page);
+    Observable<FuliBean> getFuliInfo(@Path("number")int number, @Path("page")int page);
 
 
 

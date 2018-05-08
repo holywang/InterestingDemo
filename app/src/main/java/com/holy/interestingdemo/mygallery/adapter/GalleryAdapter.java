@@ -15,6 +15,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.holy.interestingdemo.R;
+import com.holy.interestingdemo.mygallery.view.PerfectGalleryActivity;
 import com.holy.interestingdemo.network.bean.FuliBean;
 
 import java.util.List;
@@ -70,6 +71,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
     public void addList(List<FuliBean.ResultsBean> moreList){
         list.addAll(moreList);
         notifyDataSetChanged();
+
+    }
+
+    public void releaseAdapter(){
+        this.list.clear();
     }
 }
 

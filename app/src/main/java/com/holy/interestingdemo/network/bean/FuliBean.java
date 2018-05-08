@@ -1,12 +1,13 @@
 package com.holy.interestingdemo.network.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/3/20.
  */
 
-public class FuliBean {
+public class FuliBean implements Serializable{
 
     /**
      * error : false

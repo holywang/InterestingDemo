@@ -11,9 +11,10 @@ import com.holy.interestingdemo.mygallery.adapter.GalleryAdapter;
 import com.holy.interestingdemo.mygallery.present.GalleryPresent;
 import com.holy.interestingdemo.network.bean.FuliBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PerfectGalleryActivity extends BaseActivity implements IImageShower{
+public class PerfectGalleryActivity extends BaseActivity implements IImageShower {
 
     private FuliBean bean;
     private GalleryPresent present;
@@ -23,6 +24,7 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
 
     private LinearLayoutManager mLayoutManager;
     private GalleryAdapter adapter;
+
 
 
     boolean isSlidingToLast = false;
@@ -48,7 +50,7 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
     @Override
     public void doSth() {
         imageList.setScrollingTouchSlop(RecyclerView.TOUCH_SLOP_PAGING);
-        present.setImageList(10,page);
+        present.setImageList(10, page);
     }
 
 
@@ -57,7 +59,7 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         imageList.setLayoutManager(mLayoutManager);
-        adapter = new GalleryAdapter(list,this);
+        adapter = new GalleryAdapter(list, this);
         imageList.setAdapter(adapter);
         imageList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -75,7 +77,7 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         //加载更多功能的代码
                         page++;
-                        present.addMoreImage(10,page+1);
+                        present.addMoreImage(10, page + 1);
                     }
                 }
 
@@ -97,7 +99,9 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
 
     @Override
     public void addMoreImage(List<FuliBean.ResultsBean> list) {
-       adapter.addList(list);
+
+        adapter.addList(list);
+
     }
 
     @Override
@@ -105,5 +109,9 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.releaseAdapter();
+    }
 }

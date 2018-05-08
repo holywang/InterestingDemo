@@ -42,4 +42,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
+
 }
