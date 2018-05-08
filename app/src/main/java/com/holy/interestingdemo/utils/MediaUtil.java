@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.provider.MediaStore;
 
 import com.holy.interestingdemo.funnyplayer.model.bean.PlayerBean;
@@ -114,5 +115,30 @@ public class MediaUtil {
         ContentResolver cr = context.getContentResolver();
         BitmapFactory.Options options = new BitmapFactory.Options();
         return MediaStore.Video.Thumbnails.getThumbnail(cr, id, MediaStore.Video.Thumbnails.MINI_KIND, options);
+    }
+
+    /**
+     * 通过文件地址获取第一帧的预览图
+     * @param filePath
+     * @return
+     */
+    private Bitmap getFirstPicByPath(String filePath) {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            retriever.setDataSource(filePath);
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException ex) {
+            // Assume this is a corrupt video file
+        } catch (RuntimeException ex) {
+            // Assume this is a corrupt video file.
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException ex) {
+                // Ignore failures while cleaning up.
+            }
+        }
+        return bitmap;
     }
 }
