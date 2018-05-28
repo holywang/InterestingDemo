@@ -2,6 +2,7 @@ package com.holy.interestingdemo.mygallery.view;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.holy.interestingdemo.R;
@@ -10,6 +11,7 @@ import com.holy.interestingdemo.mainInfo.BaseActivity;
 import com.holy.interestingdemo.mygallery.adapter.GalleryAdapter;
 import com.holy.interestingdemo.mygallery.present.GalleryPresent;
 import com.holy.interestingdemo.network.bean.FuliBean;
+import com.holy.interestingdemo.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class PerfectGalleryActivity extends BaseActivity implements IImageShower
     private LinearLayoutManager mLayoutManager;
     private GalleryAdapter adapter;
 
+    public static float startY = 0,endY = 0,startX = 0,endX = 0;
 
 
     boolean isSlidingToLast = false;
