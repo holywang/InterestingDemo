@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.holy.insidescrollpage.pages.view.GankIOListActivity;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.eventbusdemo.EventBusActivity;
 import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         list.add("多线程MUSIC播放器");
         list.add("EventBus的Demo");
         list.add("关于Fresco的列表");
+        list.add("GankIO社区");
 
         MainPageAdapter adapter = new MainPageAdapter(this, list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
@@ -76,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 5:
                         it.setClass(MainActivity.this, PerfectGalleryActivity.class);
+                        break;
+                    case 6:
+                        it.setClass(MainActivity.this,GankIOListActivity.class);
                         break;
                 }
                 startActivity(it);

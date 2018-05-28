@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.holy.insidescrollpage">
+
+    <application>
+        <activity
+            android:name=".pages.view.GankIOListActivity"
+            android:label="@string/title_activity_gank_iolist"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".pages.view.GankIoDetailActivity"></activity>
+    </application>
+
+</manifest>
