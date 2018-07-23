@@ -78,5 +78,9 @@
 　　在这里，小三再说声谢谢吧。鞠躬，九十度。
 　　《琴帝》结束，小三的新书也已开始上传，请一直支持小三的书友们，继续支持小三的新书《斗罗大陆》吧，也要麻烦大家把给琴帝的推荐票转到新书斗罗大陆那边。同时，周日晚上1点，小三将在斗罗大陆书评区召开第一次加精大会。欢迎广大书友到时候来参加。小三将用精华感谢大家一直以来的支持。
     </string>
+    <string name="title_activity_tab_view">TabViewActivity</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">发现</string>
+    <string name="title_notifications">我的</string>
 
 </resources>

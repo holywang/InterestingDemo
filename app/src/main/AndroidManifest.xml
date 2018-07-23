@@ -59,7 +59,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".funnyplayer.ListVideoPlayActivity"></activity>
+        <activity android:name=".funnyplayer.ListVideoPlayActivity" />
+        <activity
+            android:name=".tabItem.TabViewActivity"
+            android:label="@string/title_activity_tab_view"></activity>
     </application>
 
 </manifest>

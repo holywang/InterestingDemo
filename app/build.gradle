@@ -25,9 +25,6 @@ android {
             java.srcDirs = ['src/main/java', 'src/main/aidl']
         }
     }
-    dataBinding {
-        enabled = true
-    }
 }
 
 dependencies {

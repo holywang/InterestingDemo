@@ -16,6 +16,7 @@ import com.holy.interestingdemo.funnywrite.WriteActivity;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 import com.holy.interestingdemo.mp3player.MusicPlayerActivity;
 import com.holy.interestingdemo.mygallery.view.PerfectGalleryActivity;
+import com.holy.interestingdemo.tabItem.TabViewActivity;
 import com.holy.interestingdemo.webview.WebViewActivity;
 
 import java.util.ArrayList;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         list.add("EventBus的Demo");
         list.add("关于Fresco的列表");
         list.add("GankIO社区");
+        list.add("TabBar组件");
+
 
         MainPageAdapter adapter = new MainPageAdapter(this, list);
         adapter.setOnItemClickListener(new RecyclerViewOnItemClickListener() {
@@ -80,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
                         it.setClass(MainActivity.this, PerfectGalleryActivity.class);
                         break;
                     case 6:
-                        it.setClass(MainActivity.this,GankIOListActivity.class);
+                        it.setClass(MainActivity.this, GankIOListActivity.class);
+                        break;
+                    case 7:
+                        it.setClass(MainActivity.this, TabViewActivity.class);
                         break;
                 }
                 startActivity(it);
