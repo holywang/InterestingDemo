@@ -1,18 +1,19 @@
 package com.holy.interestingdemo.mainInfo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.holy.insidescrollpage.pages.view.GankIOListActivity;
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.eventbusdemo.EventBusActivity;
 import com.holy.interestingdemo.funnyplayer.PlayerListActivity;
-import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.funnywrite.WriteActivity;
+import com.holy.interestingdemo.mainInfo.adapter.MainPageAdapter;
 import com.holy.interestingdemo.mainInfo.listener.RecyclerViewOnItemClickListener;
 import com.holy.interestingdemo.mp3player.MusicPlayerActivity;
 import com.holy.interestingdemo.mygallery.view.PerfectGalleryActivity;
@@ -28,6 +29,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainApplication.APP_TAG + "MainActivity";
 
+    public static int PhoneWidth = 0;
+    public static int PhoneHeight = 0;
+
     private RecyclerView recyclerView;
 
     private LinearLayoutManager mLayoutManager;
@@ -38,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initAdapter();
+        initPhoneWidthAndHeight();
+    }
+
+    private void initPhoneWidthAndHeight(){
+        WindowManager wm = getWindowManager();
+        PhoneWidth = wm.getDefaultDisplay().getWidth();
+        PhoneHeight = wm.getDefaultDisplay().getHeight();
     }
 
     private void initView() {

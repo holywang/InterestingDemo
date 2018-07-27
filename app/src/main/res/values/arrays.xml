@@ -8,4 +8,12 @@
         <item>游戏</item>
         <item>都市</item>
     </string-array>
+
+    <string-array name="mine_list">
+        <item>个人信息</item>
+        <item>个人设置</item>
+        <item>清空缓存</item>
+        <item>退出登录</item>
+
+    </string-array>
 </resources>

@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.holy.interestingdemo.tabItem.fragments.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="this is the fragment of home" />
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/list_refresh_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <android.support.v7.widget.RecyclerView
+           android:id="@+id/home_list_view"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+
+   </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

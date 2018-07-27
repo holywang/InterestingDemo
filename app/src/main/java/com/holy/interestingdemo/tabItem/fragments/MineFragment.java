@@ -3,6 +3,7 @@ package com.holy.interestingdemo.tabItem.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.holy.interestingdemo.R;
-import com.holy.interestingdemo.tabItem.fragments.dummy.DummyContent;
-import com.holy.interestingdemo.tabItem.fragments.dummy.DummyContent.DummyItem;
+import com.holy.interestingdemo.tabItem.fragments.mine.adapter.MyItemRecyclerViewAdapter;
+import com.holy.interestingdemo.tabItem.fragments.mine.dummy.DummyContent;
+import com.holy.interestingdemo.tabItem.fragments.mine.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -33,6 +35,7 @@ public class MineFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public MineFragment() {
+
     }
 
     // TODO: Customize parameter initialization
@@ -68,7 +71,15 @@ public class MineFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            String[] strs = getResources().getStringArray(R.array.mine_list);
+            if (strs.length != 0) {
+                DummyContent d = DummyContent.getInstance().setArray(strs);
+                MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(d.ITEMS, mListener);
+                recyclerView.setAdapter(adapter);
+            }
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
+
         }
         return view;
     }
@@ -105,4 +116,6 @@ public class MineFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
     }
+
+
 }

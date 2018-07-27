@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.holy.interestingdemo.annotations.BindViewInstaller;
 
 /**

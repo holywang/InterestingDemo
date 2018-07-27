@@ -1,4 +1,4 @@
-package com.holy.interestingdemo.tabItem.fragments;
+package com.holy.interestingdemo.tabItem.fragments.mine.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.holy.interestingdemo.R;
 import com.holy.interestingdemo.tabItem.fragments.MineFragment.OnListFragmentInteractionListener;
-import com.holy.interestingdemo.tabItem.fragments.dummy.DummyContent.DummyItem;
+import com.holy.interestingdemo.tabItem.fragments.mine.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -37,8 +37,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(""+mValues.get(position).position);
+        holder.mContentView.setText(mValues.get(position).title);
 
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {

@@ -12,7 +12,7 @@ import com.holy.interestingdemo.mainInfo.BaseActivity;
 import com.holy.interestingdemo.tabItem.fragments.FindFragment;
 import com.holy.interestingdemo.tabItem.fragments.HomeFragment;
 import com.holy.interestingdemo.tabItem.fragments.MineFragment;
-import com.holy.interestingdemo.tabItem.fragments.dummy.DummyContent;
+import com.holy.interestingdemo.tabItem.fragments.mine.dummy.DummyContent;
 
 public class TabViewActivity extends BaseActivity implements MineFragment.OnListFragmentInteractionListener {
 
@@ -74,7 +74,7 @@ public class TabViewActivity extends BaseActivity implements MineFragment.OnList
     }
 
     private void initFragments() {
-        homeFragment = HomeFragment.newInstance("", "");
+        homeFragment = HomeFragment.newInstance("10", "1");
         findFragment = FindFragment.newInstance("", "");
         mineFragment = MineFragment.newInstance(1);
         fragments = new Fragment[]{homeFragment,findFragment,mineFragment};
@@ -104,6 +104,15 @@ public class TabViewActivity extends BaseActivity implements MineFragment.OnList
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
+        switch (item.position){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 }
